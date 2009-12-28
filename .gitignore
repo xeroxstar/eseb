@@ -1,0 +1,6 @@
+log/*.log
+config/database.yml
+vendor/gems/*
+db/schema.rb
+nbproject
+nbproject/*
