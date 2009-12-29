@@ -167,6 +167,14 @@ describe User do
     User.authenticate('quentin', 'invalid_password').should be_nil
   end
 
+  it "should be authenticate by password and email" do
+    User.authenticate('quentin@example.com', 'monkey').should == users(:quentin)
+  end
+
+  it 'should not authenticate with wrong email' do
+    User.authenticate('wrongquentin@example.com', 'monkey').should_not == users(:quentin)
+  end
+
  if REST_AUTH_SITE_KEY.blank?
    # old-school passwords
    it "authenticates a user against a hard-coded old-style password" do
