@@ -288,6 +288,19 @@ describe User do
       @user.should be_pending
     end
   end
+  describe 'email notification' do
+    include EmailSpec::Helpers
+    include EmailSpec::Matchers
+
+    before(:each) do
+#      create_user
+    end
+    it 'should be send a sign up notificaiton after user register' do
+      user = create_user
+      user.should be_pending
+      UserMailer.should_receive(:deliver_signup_notification).with(user.email)
+    end
+  end
 
 protected
   def create_user(options = {})

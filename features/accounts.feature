@@ -75,3 +75,10 @@ Story: Creating an account
      Examples: Invailid login
        |  login    |  password    |  password_confirmation  | email                   |   error_explantion_message         |
        |           |  maiyeuem1232|    maiyeuem1232         | quydoantran@gmail.com   |      Login can't be blank          |
+
+  Scenario: Account Activation
+    Given an anonymous user
+     And  no user with login: 'Oona' exists
+     When I registers an account with login: 'oona', password: 'maiyeuem', password_confirmation: 'maiyeuem' and email: 'quydoantran@gmail.com'
+     Then An activation email should send to 'quydoantran@gmail.com'
+
