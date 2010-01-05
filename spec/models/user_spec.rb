@@ -296,9 +296,16 @@ describe User do
 #      create_user
     end
     it 'should be send a sign up notificaiton after user register' do
+      UserMailer.should_receive(:deliver_signup_notification)
       user = create_user
+      @email = UserMailer.create_signup_notification(user)
+      @email.should deliver_to(user.email)
       user.should be_pending
-      UserMailer.should_receive(:deliver_signup_notification).with(user.email)
+    end
+
+    it 'should not send a sign up notificaiton when register unsuccessful' do
+      UserMailer.should_not_receive(:deliver_signup_notification)
+      user = create_user(:password=>nil)
     end
   end
 
