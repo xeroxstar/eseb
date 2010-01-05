@@ -4,3 +4,4 @@ vendor/gems/*
 db/schema.rb
 nbproject
 nbproject/*
+vendor/plugins/*
