@@ -12,7 +12,6 @@ config.whiny_nils = true
 # Show full error reports and disable caching
 config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = false
-config.action_view.cache_template_loading            = true
 
 # Disable request forgery protection in test environment
 config.action_controller.allow_forgery_protection    = false
@@ -21,9 +20,11 @@ config.action_controller.allow_forgery_protection    = false
 # The :test delivery method accumulates sent emails in the
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
+config.action_mailer.default_url_options = { :host => "example.com" }
 
-# Use SQL instead of Active Record's schema dumper when creating the test database.
-# This is necessary if your schema can't be completely dumped by the schema dumper,
-# like if you have constraints or database-specific column types
-# config.active_record.schema_format = :sql
-config.gem 'email_spec', :lib => 'email_spec'
+config.gem 'cucumber',                   :lib => false
+config.gem 'webrat',                     :lib => false
+config.gem 'rspec',                      :lib => false
+config.gem 'rspec-rails',                :lib => 'spec/rails'
+config.gem 'fixjour',                    :lib => 'fixjour'
+config.gem 'collectiveidea-delayed_job', :lib => 'delayed_job', :source => 'http://gems.github.com'
