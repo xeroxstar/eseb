@@ -27,10 +27,8 @@ Story: Creating an account
     When  she registers an account as the preloaded 'Oona'
     Then  she should be redirected to the home page
     When  she follows that redirect!
-    Then  she should see a notice message 'Thanks for signing up!'
-     And  a user with login: 'oona' should exist
+    Then  a user with login: 'oona' should exist
      And  the user should have login: 'oona', and email: 'unactivated@example.com'
-
      And  oona should be logged in
 
 
@@ -57,53 +55,23 @@ Story: Creating an account
   #
   # Account Creation Failure: Incomplete input
   #
-  Scenario: Anonymous user can not create an account with incomplete or incorrect input
+  Scenario Outline: Anonymous user can not create a account with invalid value
     Given an anonymous user
-     And  no user with login: 'Oona' exists
-    When  she registers an account with login: '',     password: 'monkey', password_confirmation: 'monkey' and email: 'unactivated@example.com'
-    Then  she should be at the 'users/new' page
-     And  she should     see an errorExplanation message 'Login can't be blank'
-     And  no user with login: 'oona' should exist
-
-  Scenario: Anonymous user can not create an account with no password
-    Given an anonymous user
-     And  no user with login: 'Oona' exists
-    When  she registers an account with login: 'oona', password: '',       password_confirmation: 'monkey' and email: 'unactivated@example.com'
-    Then  she should be at the 'users/new' page
-     And  she should     see an errorExplanation message 'Password can't be blank'
-     And  no user with login: 'oona' should exist
-
-  Scenario: Anonymous user can not create an account with no password_confirmation
-    Given an anonymous user
-     And  no user with login: 'Oona' exists
-    When  she registers an account with login: 'oona', password: 'monkey', password_confirmation: ''       and email: 'unactivated@example.com'
-    Then  she should be at the 'users/new' page
-     And  she should     see an errorExplanation message 'Password confirmation can't be blank'
-     And  no user with login: 'oona' should exist
-
-  Scenario: Anonymous user can not create an account with mismatched password & password_confirmation
-    Given an anonymous user
-     And  no user with login: 'Oona' exists
-    When  she registers an account with login: 'oona', password: 'monkey', password_confirmation: 'monkeY' and email: 'unactivated@example.com'
-    Then  she should be at the 'users/new' page
-     And  she should     see an errorExplanation message 'Password doesn't match confirmation'
-     And  no user with login: 'oona' should exist
-
-  Scenario: Anonymous user can not create an account with bad email
-    Given an anonymous user
-     And  no user with login: 'Oona' exists
-    When  she registers an account with login: 'oona', password: 'monkey', password_confirmation: 'monkey' and email: ''
-    Then  she should be at the 'users/new' page
-     And  she should     see an errorExplanation message 'Email can't be blank'
-     And  no user with login: 'oona' should exist
-    When  she registers an account with login: 'oona', password: 'monkey', password_confirmation: 'monkey' and email: 'unactivated@example.com'
-    Then  she should be redirected to the home page
-    When  she follows that redirect!
-    Then  she should see a notice message 'Thanks for signing up!'
-     And  a user with login: 'oona' should exist
-     And  the user should have login: 'oona', and email: 'unactivated@example.com'
-
-     And  oona should be logged in
-
-
-
+      And no user with login: '<login>' exists
+     When I registers an account with login: '<login>', password: '<password>', password_confirmation: '<password_confirmation>' and email: '<email>'
+     Then I should be at the 'users/new' page
+     And  I should     see an errorExplanation message '<error_explantion_message>'
+     And  no user with login: '<login>' should exist
+     Examples: Invailid Email
+       |  login    |  password   |  password_confirmation  | email         |   error_explantion_message                  |
+       |  quydoan  |  maiyeuem   |    maiyeuem             | quydoan-a)@   |      Email should look like an email address|
+       |  quydoan  |  yeuem1EW2  |    yeuem1EW2            |               |      Email can't be blank                   |
+     Examples: Password does not match
+       |  login    |  password   |  password_confirmation  | email         |   error_explantion_message                  |
+       |  quydoan  |  maiyeuem1232|    maiyeuem             | quydoantran@gmail.com   |      Password doesn't match confirmation|
+       |  quydoan  |  maiyeuem1232|    yeuem1EW2            | quydoantran@gmail.com   |      Password doesn't match confirmation|
+       |  quydoan  |              |    yeuem1EW2            | quydoantran@gmail.com   |      Password can't be blank|
+       |  quydoan  |  yeuem1EW2   |                         | quydoantran@gmail.com   |      Password confirmation can't be blank|
+     Examples: Invailid login
+       |  login    |  password    |  password_confirmation  | email                   |   error_explantion_message         |
+       |           |  maiyeuem1232|    maiyeuem1232         | quydoantran@gmail.com   |      Login can't be blank          |
