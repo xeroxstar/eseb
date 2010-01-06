@@ -5,7 +5,7 @@ h1. Welcome to Easy SELL Easy BUY
 h2. Documentation
 * "Installation":#INSTALL
 
-<a id="INSTALL"> </a>
+<a id="INSTALL"/> </a>
 h2. Getting Started
 * Create database
   <em>rake db:create:all</em>
