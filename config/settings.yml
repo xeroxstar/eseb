@@ -1,0 +1,14 @@
+development:
+  username: quydoantran@gmail.com
+  password: maiyeuem
+  authentication: plain
+  domain: eseb.com
+  address: smtp.gmail.com
+  port: 587
+  tls: true
+
+production:
+  username: no-reply@snember.com
+  password: minority
+  address: 202.43.44.96
+  port: 25
