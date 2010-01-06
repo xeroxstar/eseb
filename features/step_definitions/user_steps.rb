@@ -71,6 +71,11 @@ Then "$login should be logged in" do |login|
   controller.current_user.login.should == login
 end
 
+Then /^(?:I|they) should receive an email with a link to a (.+) page$/ do |page|
+  open_last_email_for(last_email_address)
+  links_in_email(current_email).should contain(page)
+end
+
 def named_user login
   user_params = {
     'admin'   => {'id' => 1, 'login' => 'addie', 'password' => '1234addie', 'email' => 'admin@example.com',       },

@@ -1,14 +1,25 @@
 development:
-  username: quydoantran@gmail.com
+  user_name: quydoantran@gmail.com
   password: maiyeuem
-  authentication: plain
+  authentication: :plain
+  domain: eseb.com
+  address: smtp.gmail.com
+  port: 587
+  tls: true
+test: &test
+  user_name: exampleran@gmail.com
+  password: password
+  authentication: :plain
   domain: eseb.com
   address: smtp.gmail.com
   port: 587
   tls: true
 
+cucumber:
+  <<: *test
+
 production:
-  username: no-reply@snember.com
+  user_name: no-reply@snember.com
   password: minority
   address: 202.43.44.96
   port: 25

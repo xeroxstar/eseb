@@ -29,7 +29,6 @@ Story: Creating an account
     When  she follows that redirect!
     Then  a user with login: 'oona' should exist
      And  the user should have login: 'oona', and email: 'unactivated@example.com'
-     And  oona should be logged in
 
 
   #
@@ -80,5 +79,10 @@ Story: Creating an account
     Given an anonymous user
      And  no user with login: 'Oona' exists
      When I registers an account with login: 'oona', password: 'maiyeuem', password_confirmation: 'maiyeuem' and email: 'quydoantran@gmail.com'
-     Then An activation email should send to 'quydoantran@gmail.com'
+     Then "quydoantran@gmail.com" should receive an email
+     And  "quydoantran@gmail.com" should have 1 email
+     And I should receive an email with a link to a activate page
 
+    Given an anonymous user
+     When I registers an account with login: 'reggie', password: 'monkey', and email: 'reggie@example.com'
+     Then "reggie@example.com" should have no email
