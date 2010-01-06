@@ -1,0 +1,31 @@
+h1. Welcome to Easy SELL Easy BUY
+
+  This is a shops community.
+
+h2. Documentation
+* "Installation":#INSTALL
+
+<a id="INSTALL"> </a>
+h2. Getting Started
+* Create database
+  <em>rake db:create:all</em>
+
+* Install test gems
+  <em>rake gems:unpack RAILS_ENV=test</em>
+
+* Install gems
+  <em>rake gems:unpack</em>
+
+* Install resful-authenticate plugins
+  - Go to vendor/plugin folder
+    <em>git clone git://github.com/technoweenie/restful-authentication.git restful_authentication</em>
+  Readmore: "Restful Authentication Generator":http://github.com/technoweenie/restful-authentication
+
+* Install emails spec plugin (for test)
+  <em>script/plugin install git://github.com/bmabey/email-spec.git</em>
+  Read more "http://github.com/bmabey/email-spec/":http://github.com/bmabey/email-spec/
+
+
+==You will be able to:
+
+Thank you.
