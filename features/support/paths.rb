@@ -10,7 +10,8 @@ module NavigationHelpers
 
     when /the home\s?page/
       '/'
-
+    when /my_account/
+      my_account_path
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
