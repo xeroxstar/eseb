@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   include Authentication::ByCookieToken
   include Authorization::AasmRoles
 
+  NAME_REG = /^[a-z0-9\-\.\s]{3,}$/ix
+
   validates_presence_of     :login
   validates_length_of       :login,    :within => 3..40
   validates_uniqueness_of   :login
@@ -19,7 +21,11 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
+  validates_format_of       :first_name, :with=>NAME_REG, :allow_nil =>true
 
+  validates_format_of       :last_name, :with=>NAME_REG , :allow_nil =>true
+
+  validates_length_of       :address, :minimum=>12, :allow_blank=>true
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
@@ -28,6 +34,8 @@ class User < ActiveRecord::Base
                   :first_name, :last_name,:address, :social_id,:country_id,:city
 
 
+  # Asccociation
+  belongs_to :country
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
@@ -49,6 +57,12 @@ class User < ActiveRecord::Base
 
   def email=(value)
     write_attribute :email, (value ? value.downcase : nil)
+  end
+
+  # Check user whether have enough personal infos or not to create a shop
+  #   return true. When first_name, last_name, city, address, country is not nil
+  def full_personal_infos?
+    return (first_name && last_name && city && address && country)
   end
 
   protected

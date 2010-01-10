@@ -23,6 +23,7 @@ Given "$an $user_type user logged in as '$login'" do |_, user_type, login|
 end
 
 Given "$actor is logged in" do |login|
+  log_out!
   activated_user login_name(login)
   log_in_user! @valid_data
 end
@@ -83,7 +84,7 @@ def named_user login
     'admin'   => {'id' => 1, 'login' => 'addie', 'password' => '1234addie', 'email' => 'admin@example.com',       },
     'oona'    => {          'login' => 'oona',   'password' => '1234oona',  'email' => 'unactivated@example.com'},
     'reggie'  => {          'login' => 'reggie', 'password' => 'monkey',    'email' => 'registered@example.com' },
-    }
+  }
   user_params[login.downcase]
 end
 

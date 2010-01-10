@@ -4,3 +4,6 @@
 %>
 
 <%= "edit.html" %>
+<%if current_user.full_personal_infos?%>
+  <%=button_to "Create Shop", {:controller=>'shops',:action => "new",:method=>:get}%>
+<%end%>
