@@ -83,6 +83,7 @@ Story: Creating an account
      And  "quydoantran@gmail.com" should have 1 email
      And I should receive an email with a link to a activate page
 
+  Scenario: Resgister an account unsuccessfull, should not send email
     Given an anonymous user
      When I registers an account with login: 'reggie', password: 'monkey', and email: 'reggie@example.com'
      Then "reggie@example.com" should have no email

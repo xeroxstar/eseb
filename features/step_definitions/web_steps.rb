@@ -257,3 +257,11 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+Then /^(?:|I) should see "([^\"]*)" button$/ do |button_name|
+  response.should have_tag('input',:type=>'submit',:content=>button_name)
+end
+
+Then /^(?:|I) should not see "([^\"]*)" button$/ do |button_name|
+  response.should_not have_tag('input',:type=>'submit',:content=>button_name)
+end

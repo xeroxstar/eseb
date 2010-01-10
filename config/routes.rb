@@ -5,9 +5,12 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil
   map.my_account '/my_account' , :controller=>'users',:action=>'edit'
+  map.my_shop '/myshop',:controller=>'shops', :action=>'myshop'
   map.resources :users
+  map.resources :shops,:member=>{:deactive=>:put,
+                                     :reactive=>:put}, :except=>[:destroy]
 
-  map.resource :session
+  map.resource :session, :only=>[:create,:destroy,:new]
 
   # The priority is based upon order of creation: first created -> highest priority.
 
@@ -49,6 +52,6 @@ ActionController::Routing::Routes.draw do |map|
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
   map.root :controller=>'home'
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+#  map.connect ':controller/:action/:id'
+#  map.connect ':controller/:action/:id.:format'
 end

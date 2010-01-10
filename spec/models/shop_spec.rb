@@ -68,10 +68,8 @@ describe Shop do
       create_shop
     end
 
-    it 'should belong to user and user should have enough personal info' do
-      pending
-      @shop.owner.should be_a_kind_of(User)
-      @shop.owner.should be_enough_info
+    it 'should belong to a shopowner' do
+      @shop.owner.should be_a_kind_of(ShopOwner)
     end
 
     it 'should have many products' do

@@ -11,8 +11,14 @@ Story: Creating a shop
     When I have enough personal infomations
     I should be able to create a shop
 
-    Scenario: A logged in user go to create a shop
+    Scenario: Enough infomations user go to create a shop
       Given reggie is logged in
        And  I have enough personal infomations
        When I go to /my_account
-       And  I should see "Create Shop" button
+       Then I should see "Create Shop" button
+
+    Scenario: Unenough infomations user go to create a shop
+       Given reggie is logged in
+       And  I do not have enough personal infomations
+       When I go to /my_account
+       Then I should not see "Create Shop" button
