@@ -92,7 +92,7 @@ describe ShopsController do
         get :show, :id=>'shortname'
         response.should redirect_to(home_url)
         assigns[:shop].should be_nil
-        flash[:notice].should =~ /not found/
+        flash[:warning].should_not be_nil
       end
 
       it 'should display shop name' do
@@ -100,6 +100,46 @@ describe ShopsController do
         get :show, :id=>'shortname'
         response.should render_template('shops/show.html')
         assigns[:shop].should ==@shop
+      end
+    end
+
+    describe 'create action' do
+      before(:each) do
+        @user = mock_user
+        login_as(@user)
+        controller.stub!(:current_user).and_return(@user)
+        @shop_valid_data = {:name=>'Quynh Khanh',:shortname=>'quynhkhanh'}
+        @shop = mock_shop
+      end
+      describe 'user have enough personal infomation' do
+        before(:each) do
+          @user.stub!(:full_personal_infos?).and_return(true)
+          Shop.should_receive(:new).and_return(@shop.as_new_record)
+        end
+
+        it 'should go to my shop if post valid shop data' do
+          @shop.should_receive(:save).and_return(true)
+          post :create , :shop=>@shop_valid_data
+          response.should redirect_to(my_shop_url)
+        end
+
+        it 'should go to render to shops/new template if post invalid shop data' do
+          @shop_invalid_data = @shop_valid_data.merge(:shortname=>nil)
+          @shop.should_receive(:save).and_return(false)
+          post :create , :shop=>@shop_invalid_data
+          response.should render_template('shops/new.html')
+        end
+      end
+
+      describe 'user do not have enough personal infomation' do
+        before(:each) do
+          @user.stub!(:full_personal_infos?).and_return(false)
+        end
+        it 'should redirect to edit account page' do
+          post :create, :shop=>@shop_valid_data
+          response.should redirect_to(edit_user_url(@user))
+          flash[:warning].should_not be_nil
+        end
       end
     end
   end
