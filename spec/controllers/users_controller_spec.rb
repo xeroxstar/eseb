@@ -94,6 +94,7 @@ end
 
 describe UsersController do
   describe "route generation" do
+    #TODO : should generate update url
     it "should route users's 'index' action correctly" do
       route_for(:controller => 'users', :action => 'index').should == "/users"
     end
@@ -124,6 +125,7 @@ describe UsersController do
   end
 
   describe "route recognition" do
+    #TODO : should recognize update url
     it "should generate params for users's index action from GET /users" do
       params_from(:get, '/users').should == {:controller => 'users', :action => 'index'}
       params_from(:get, '/users.xml').should == {:controller => 'users', :action => 'index', :format => 'xml'}
@@ -169,7 +171,7 @@ describe UsersController do
     before(:each) do
       get :new
     end
-
+    #TODO : should have update route action
     it "should route users_path() to /users" do
       users_path().should == "/users"
       users_path(:format => 'xml').should == "/users.xml"
@@ -192,5 +194,7 @@ describe UsersController do
       edit_user_path(:id => '1').should == "/users/1/edit"
     end
   end
+  #TODO : Write spec for update user infos
+
 
 end

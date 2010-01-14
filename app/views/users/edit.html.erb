@@ -1,9 +1,4 @@
-<%#
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-%>
-
-<%= "edit.html" %>
+<%=render :partial=>'informations_form', :locals=>{:user=>@user}%>
 <%if current_user.full_personal_infos?%>
   <%=button_to "Create Shop", {:controller=>'shops',:action => "new",:method=>:get}%>
 <%end%>

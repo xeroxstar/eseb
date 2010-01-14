@@ -19,4 +19,17 @@ module MockTestHelpers
     shop
   end
 
+  def mock_full_info_user_model
+    user = mock_model(User,{:login=>'quydoan',
+        :email=>'quydoantran@gmail.com',
+        :first_name=>'Quy',
+        :last_name=>'Doan',
+        :social_id=>'2714663213',
+        :address=>'37 Hung Vuong Long Khanh Dong Nai',
+        :city=>'Dong Nai',
+        :country_id=>'1'})
+    user
+  end
+
+
 end
