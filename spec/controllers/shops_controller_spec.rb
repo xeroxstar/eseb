@@ -81,8 +81,8 @@ describe ShopsController do
         put :reactive, :id=>1
         response.should redirect_to(new_session_url)
       end
-
     end
+
     describe 'show action' do
       before(:each) do
         @shop = mock_shop

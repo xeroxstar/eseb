@@ -221,6 +221,19 @@ describe User do
     users(:quentin).remember_token_expires_at.between?(before, after).should be_true
   end
 
+  it 'have engouh information when it filled first_name, last_name, city, adrress and country' do
+    @user = users(:quentin)
+    @user = become_shop_owner
+    @user.should be_full_personal_infos
+  end
+  [:last_name,:first_name,:city,:address].each do |attr|
+    it "have not engouh informations when it missing #{attr}" do
+      @user = users(:quentin)
+      @user = become_shop_owner(attr=>nil)
+      @user.should_not be_full_personal_infos
+    end
+  end
+
   it 'remembers me until one week' do
     time = 1.week.from_now.utc
     users(:quentin).remember_me_until time
@@ -263,7 +276,7 @@ describe User do
     users(:quentin).should be_deleted
   end
 
- describe "being unsuspended" do
+  describe "being unsuspended" do
     fixtures :users
 
     before do
@@ -325,5 +338,6 @@ describe User do
       :country_id=>1
     }.merge(shop_owner_attrs)
     @user.update_attributes(@shop_owner_infos)
+    @user
   end
 end

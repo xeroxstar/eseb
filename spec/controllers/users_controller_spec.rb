@@ -26,6 +26,7 @@ describe UsersController do
     assigns(:user).reload
     assigns(:user).activation_code.should_not be_nil
   end
+
   it 'requires login on signup' do
     lambda do
       create_user(:login => nil)
@@ -33,6 +34,7 @@ describe UsersController do
       response.should be_success
     end.should_not change(User, :count)
   end
+
 
   it 'requires password on signup' do
     lambda do
@@ -195,6 +197,29 @@ describe UsersController do
     end
   end
   #TODO : Write spec for update user infos
+  describe 'update infomation' do
+    fixtures :users
+    before(:each) do
+      @user = users(:quentin)
+      login_as(@user)
+    end
 
+    describe 'edit action' do
+      it 'require user must logged in' do
+        logout_keeping_session!
+        get 'edit'
+        response.should be_redirect
+      end
 
+      it 'should render users/edit.html' do
+        get 'edit' , :id=>@user.id
+        response.template.should render_template('users/edit.html')
+      end
+    end
+
+    describe 'update action' do
+      it 'i'
+    end
+  end
 end
+
