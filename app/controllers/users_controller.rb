@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # Protect these actions behind an admin login
   # before_filter :admin_required, :only => [:suspend, :unsuspend, :destroy, :purge]
   before_filter :find_user, :only => [:suspend, :unsuspend, :destroy, :purge]
-  before_filter :login_required , :only=>[:edit]
+  before_filter :login_required , :only=>[:edit,:update]
 
   # render new.rhtml
   def new
@@ -14,6 +14,16 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+  end
+
+  def update
+    @user = User.find(params[:id])
+    @user.update_attributes(params[:user])
+    if @user.shop.nil? && @user.full_personal_infos?
+      redirect_to new_shop_path
+    else
+      render :action=>'edit'
+    end
   end
 
   def create

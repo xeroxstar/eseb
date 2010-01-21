@@ -202,13 +202,20 @@ describe UsersController do
     before(:each) do
       @user = users(:quentin)
       login_as(@user)
+      @shop_owner_valid_infos = {:first_name=>"Doan",
+        :last_name=>'Tran Quy',
+        :address=>'37 Hung Vuong, Long Khanh, Dong nai',
+        :social_id=>'B3271477',
+        :city=>'Ho Chi Minh',
+        :country_id=>1
+      }
     end
 
     describe 'edit action' do
       it 'require user must logged in' do
         logout_keeping_session!
         get 'edit'
-        response.should be_redirect
+        response.should go_to_login_page
       end
 
       it 'should render users/edit.html' do
@@ -218,8 +225,25 @@ describe UsersController do
     end
 
     describe 'update action' do
-      it 'i'
+      it 'require user must logged in' do
+        logout_keeping_session!
+        put 'update',:id=>@user.id, :user=>@shop_owner_valid_infos
+        response.should go_to_login_page
+      end
+
+      it 'should be redirect to create shop page when full_personal_infos' do
+        put "update", :id=>@user.id, :user=>@shop_owner_valid_infos
+        response.should redirect_to :controller=>'shops',:action=>'new'
+      end
+
+      it 'shoudl be render users/edit when not enought info' do
+        put "update", :id=>@user.id, :user=>@shop_owner_valid_infos.merge(:address=>nil)
+        response.should render_template('users/edit.html')
+      end
     end
+  end
+  def go_to_login_page
+    redirect_to :controller=>'sessions',:action=>'new'
   end
 end
 

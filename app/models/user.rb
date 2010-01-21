@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
 
   # Asccociation
   belongs_to :country
-
+  has_one :shop
 
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   # Check user whether have enough personal infos or not to create a shop
   #   return true. When first_name, last_name, city, address, country is not nil
   def full_personal_infos?
-    return (first_name && last_name && city && address && country)
+    return !(first_name.blank? || last_name.blank? || city.blank? || address.blank? || country.blank?)
   end
 
   protected

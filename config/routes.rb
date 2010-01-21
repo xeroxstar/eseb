@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
   map.my_shop '/myshop',:controller=>'shops', :action=>'myshop'
   map.resources :users
   map.resources :shops,:member=>{:deactive=>:put,
-                                     :reactive=>:put}, :except=>[:destroy]
+                                 :reactive=>:put}, :except=>[:destroy]
 
   map.resource :session, :only=>[:create,:destroy,:new]
 
@@ -53,6 +53,6 @@ ActionController::Routing::Routes.draw do |map|
   # consider removing or commenting them out if you're using named routes and resources.
   map.home '/home',:controller=>'home'
   map.root :controller=>'home'
-#  map.connect ':controller/:action/:id'
-#  map.connect ':controller/:action/:id.:format'
+  #  map.connect ':controller/:action/:id'
+  #  map.connect ':controller/:action/:id.:format'
 end
