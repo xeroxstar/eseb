@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :name, :password, :password_confirmation,
-                  :first_name, :last_name,:address, :social_id,:country_id,:city
+    :first_name, :last_name,:address, :social_id,:country_id,:city
 
 
   # Asccociation
@@ -48,8 +48,8 @@ class User < ActiveRecord::Base
   def self.authenticate(login, password)
     return nil if login.blank? || password.blank?
     u = find_in_state :first, :active,
-                      :conditions => ["login = ? or email = ?",login.downcase,login.downcase]
-                    ## need to get the salt
+      :conditions => ["login = ? or email = ?",login.downcase,login.downcase]
+    ## need to get the salt
     u && u.authenticated?(password) ? u : nil
   end
 
@@ -64,15 +64,15 @@ class User < ActiveRecord::Base
   # Check user whether have enough personal infos or not to create a shop
   #   return true. When first_name, last_name, city, address, country is not nil
   def full_personal_infos?
-    return !(first_name.blank? || last_name.blank? || city.blank? || address.blank? || country.blank?)
+    return !(first_name.blank? || last_name.blank? || social_id.blank? || city.blank? || address.blank? || country.blank?)
   end
 
   protected
 
-    def make_activation_code
-        self.deleted_at = nil
-        self.activation_code = self.class.make_token
-    end
+  def make_activation_code
+    self.deleted_at = nil
+    self.activation_code = self.class.make_token
+  end
 
 
 end

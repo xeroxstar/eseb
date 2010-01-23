@@ -4,9 +4,9 @@ ActionController::Routing::Routes.draw do |map|
   map.register '/register', :controller => 'users', :action => 'create'
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil
-  map.my_account '/my_account' , :controller=>'users',:action=>'edit'
+  map.my_account '/my_account.:format' , :controller=>'users',:action=>'edit'
   map.my_shop '/myshop',:controller=>'shops', :action=>'myshop'
-  map.resources :users
+  map.resources :users,:except =>[:edit]
   map.resources :shops,:member=>{:deactive=>:put,
                                  :reactive=>:put}, :except=>[:destroy]
 

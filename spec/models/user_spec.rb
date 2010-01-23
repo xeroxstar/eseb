@@ -321,6 +321,22 @@ describe User do
       user = create_user(:password=>nil)
     end
   end
+  describe 'util methods' do
+    before(:each) do
+       @user = users(:quentin)
+    end
+    ['city','first_name','last_name','address','social_id','city','country_id'].each do |attr|
+      it "full_personal_infos? should return false if #{attr} nil or blank" do
+        become_shop_owner(attr.to_sym=>nil)
+        @user.should_not be_full_personal_infos
+      end
+    end
+
+    it 'full_personal_infos? should return true if user is a shop ower or all info already filled' do
+        become_shop_owner
+        @user.should be_full_personal_infos
+    end
+  end
 
   protected
   def create_user(options = {})

@@ -13,11 +13,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = current_user
     @user.update_attributes(params[:user])
     if @user.shop.nil? && @user.full_personal_infos?
       redirect_to new_shop_path
