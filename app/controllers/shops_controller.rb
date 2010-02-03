@@ -1,7 +1,8 @@
 class ShopsController < ApplicationController
   before_filter :login_required, :except=>[:show]
-
+  before_filter :require_shopowner, :except=>[:show]
   def new
+    @shop = Shop.new
   end
 
   def show
@@ -13,17 +14,20 @@ class ShopsController < ApplicationController
   end
 
   def create
-    if current_user.full_personal_infos?
-      @shop = Shop.new(params[:shop])
-      if @shop.save
-        flash[:notice] = 'success'
-        redirect_to(my_shop_path)
-      else
-        render :action=>'new'
-      end
+    @shop = current_shopowner.build_shop(params[:shop])
+    if @shop.save
+      flash[:notice] = 'success'
+      redirect_to(my_shop_path)
     else
-      flash[:warning] = "you haven't put enough infomation."
-      redirect_to(edit_user_path(current_user))
+      render :action=>'new'
     end
   end
+
+  def myshop
+    @shop = current_shopowner.shop
+    unless @shop
+      redirect_to :action=>:new
+    end
+  end
+
 end
