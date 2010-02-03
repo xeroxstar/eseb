@@ -13,6 +13,19 @@ class ShopsController < ApplicationController
     end
   end
 
+  def edit
+    @shop = current_shopowner.shop
+  end
+
+  def update
+    @shop = current_shopowner.shop
+    if @shop.update_attributes(params[:shop])
+      redirect_to my_shop_path
+    else
+      render :edit
+    end
+  end
+
   def create
     @shop = current_shopowner.build_shop(params[:shop])
     if @shop.save
