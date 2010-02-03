@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
 
   validates_length_of       :address, :minimum=>12, :allow_blank=>true
 
+  validates_presence_of :first_name,:last_name,:address,:social_id,:country_id,:city , :if =>:has_shop?
+
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
@@ -68,6 +70,11 @@ class User < ActiveRecord::Base
   end
 
   protected
+
+  # does user have a shop?
+  def has_shop?
+    return shop
+  end
 
   def make_activation_code
     self.deleted_at = nil

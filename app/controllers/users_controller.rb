@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     if @user.shop.nil? && @user.full_personal_infos?
       redirect_to new_shop_path
     else
-      render :action=>'edit'
+      render :edit
     end
   end
 
