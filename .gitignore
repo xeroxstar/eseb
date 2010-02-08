@@ -5,3 +5,5 @@ db/schema.rb
 nbproject
 nbproject/*
 vendor/plugins/*
+coverage/*
+coverage
