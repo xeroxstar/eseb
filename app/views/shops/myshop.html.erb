@@ -1,1 +1,9 @@
 <%=@shop.name%>
+<%=render :partial=>'shop'%>
+<%if @shop.unactive?%>
+  <a href="/shop_active">Reactive</a>
+<%else%>
+  <a href="/shop_deactive">Deactive</a>
+<%end%>
+
+

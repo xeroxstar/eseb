@@ -1,4 +1,6 @@
 class Shop < ActiveRecord::Base
+  ACTIVE = 1
+  DEACTIVE = 2
   SHORTNAME_FORMAT = /^[a-zA-Z0-9\-]{3,}$/i
   belongs_to :owner, :class_name=>'ShopOwner', :foreign_key=>'user_id'
 
@@ -10,5 +12,9 @@ class Shop < ActiveRecord::Base
   validates_presence_of     :name
 
   validates_uniqueness_of   :user_id
+
+  def unactive?
+    self.status == DEACTIVE
+  end
 
 end

@@ -16,6 +16,14 @@ describe ShopsController do
       {:get=>'/shops/new'}.should route_to(:controller=>'shops',:action=>'new')
     end
 
+    it "should route shops's 'deactive' action correctly" do
+      {:put=>'/shops/deactive'}.should route_to(:controller=>'shops',:action=>'deactive')
+    end
+
+    it "should route shops's 'reactive' action correctly" do
+      {:put=>'/shops/reactive'}.should route_to(:controller=>'shops',:action=>'reactive')
+    end
+
     it "should route shops's 'edit' action correctly"  do
       {:get=>'/shops/1/edit'}.should route_to(:controller=>'shops',:action=>'edit',:id=>'1')
     end
@@ -94,8 +102,8 @@ describe ShopsController do
 
       it 'my shop' do
         @user = users(:shopowner)
-        create_shop(@user,@shop_valid_data)
         login_as(@user)
+        post :create, :shop=>@shop_valid_data
         get :myshop
         controller.current_shopowner.shop.should_not be_nil
         response.should render_template('shops/myshop.html')
@@ -107,6 +115,7 @@ describe ShopsController do
         get :myshop
         response.should redirect_to(new_shop_url)
       end
+
     end
 
     describe 'create/update shop' do
