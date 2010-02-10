@@ -22,7 +22,6 @@ aaron:
   remember_token:
   activation_code:           1b6453892473a467d07372d45eb05abc2031647a
   activated_at:
-
   state:                     pending
 
 old_password_holder:
@@ -35,8 +34,6 @@ old_password_holder:
 
   activation_code:
   activated_at:              <%= 5.days.ago.to_s :db %>
-
-
   state:                     active
 
 shopowner:
@@ -47,7 +44,7 @@ shopowner:
   crypted_password:          8f85b85e25b8c0e1f8d937414410e567a1c74f21 # 'monkey'
   created_at:                <%= 5.days.ago.to_s :db  %>
   remember_token_expires_at: <%= 1.days.from_now.to_s :db%>
-  remember_token:            77de68d22aecd823babbb58edb1c8e14d7106e83bb
+  remember_token:            77de68d223bb
   activation_code:
   activated_at:              <%= 5.days.ago.to_s :db %>
   state:                     active
@@ -61,19 +58,19 @@ shopowner:
 
 shopowner_quy:
   id:                        6
-  login:                     quydoan1
-  email:                     quydoan2@example.com
+  login:                     quydoantra
+  email:                     quydoantra@example.com
   salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
   crypted_password:          8f85b85e25b8c0e1f8d937414410e567a1c74f21 # 'monkey'
   created_at:                <%= 5.days.ago.to_s :db  %>
   remember_token_expires_at: <%= 1.days.from_now.to_s :db%>
-  remember_token:            77de68d22aecd823babbb58edb1c8e14d7106e83bb
+  remember_token:            77de68d22bb
   activation_code:
   activated_at:              <%= 5.days.ago.to_s :db %>
   state:                     active
   first_name: Quy
   last_name: DOan
-  social_id: 123412321
+  social_id: 12341232121
   city: Penn Sate
   address: 36  Hung Vuong Long Khanh Dong Nai
   country_id: 1

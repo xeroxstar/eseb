@@ -42,4 +42,15 @@ class ShopsController < ApplicationController
     end
   end
 
+  def deactive
+    @shop = current_shopowner.shop
+    @shop.deactivate
+    redirect_to edit_user_url
+  end
+
+  def reactive
+    @shop = current_shopowner.shop
+    @shop.deactive
+  end
+
 end

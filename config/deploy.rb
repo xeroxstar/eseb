@@ -1,13 +1,17 @@
 default_run_options[:pty] = true
 set :application, "weeshop"
-set :repository,  "/var/www/eseb/.git/"
+set :repository,  "git@github.com:RobDoan/eseb.git"
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
-set :scm_passphrase, "RobdaMAN"
+#set :scm_passphrase, "RobdaMAN"
 set :user, "rob"
-set :branch, "master"
+set :branch, :default
 set :deploy_via, :remote_cache
+set :rails_env, :production
+
+set :deploy_to, 'server'
+
 
 role :web, "localhost"                          # Your HTTP server, Apache/etc
 role :app, "localhost"                          # This may be the same as your `Web` server

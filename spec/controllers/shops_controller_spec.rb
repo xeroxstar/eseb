@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 include AuthenticatedTestHelper
 include MockTestHelpers
 describe ShopsController do
-  fixtures :users
+  fixtures :users, :shops
   describe 'route genration' do
     it "should route shops's 'show' action correctly" do
       {:get=>'/shops/shortname'}.should route_to(:controller=>'shops',:action=>'show',:id=>'shortname')
@@ -14,14 +14,6 @@ describe ShopsController do
 
     it "should route shops's 'new' action correctly" do
       {:get=>'/shops/new'}.should route_to(:controller=>'shops',:action=>'new')
-    end
-
-    it "should route shops's 'deactive' action correctly" do
-      {:put=>'/shops/deactive'}.should route_to(:controller=>'shops',:action=>'deactive')
-    end
-
-    it "should route shops's 'reactive' action correctly" do
-      {:put=>'/shops/reactive'}.should route_to(:controller=>'shops',:action=>'reactive')
     end
 
     it "should route shops's 'edit' action correctly"  do

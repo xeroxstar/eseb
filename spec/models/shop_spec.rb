@@ -1,12 +1,10 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Shop do
-  fixtures :shops
+  fixtures :users,:shops
 
   before(:each) do
-    @shop_owner = stub_model(ShopOwner,{
-        :login=>'quydoantran',
-        :email=>'quydoantran@gmail.com'})
+    @shop_owner = users(:shopowner).becomes(ShopOwner)
     @valid_attributes = {
       :name =>"Quynh Khanh",
       :shortname=>'quynhkhanh',
@@ -19,8 +17,8 @@ describe Shop do
       Shop.create(@valid_attributes)
     }.should change(Shop,:count).by(1)
   end
-  describe "attributes" do
 
+  describe "attributes" do
     it 'should have name' do
       create_shop({:name=>nil})
       @shop.errors.on(:name).should_not be_nil
@@ -81,6 +79,21 @@ describe Shop do
     end
 
   end # End describe asscociation
+
+  describe 'util' do
+    before(:each) do
+      @shop = shops(:crazy_love)
+    end
+
+    it 'should be able to deactive' do
+      @shop.deactivate
+      @shop.should be_unactive
+    end
+    it 'should be able to reactive' do
+      @shop.activate
+      @shop.should_not be_unactive
+    end
+  end
 
   def create_shop(attrs={})
     @valid_attributes = @valid_attributes.merge(attrs)
