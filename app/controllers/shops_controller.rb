@@ -29,7 +29,6 @@ class ShopsController < ApplicationController
   def create
     @shop = current_shopowner.build_shop(params[:shop])
     if @shop.save
-      flash[:notice] = 'success'
       redirect_to(my_shop_path)
     else
       render :action=>'new'

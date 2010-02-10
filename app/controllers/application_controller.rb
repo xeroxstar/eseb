@@ -10,11 +10,12 @@ class ApplicationController < ActionController::Base
    helper_method :current_user
 
    def current_shopowner
-     current_user.becomes(ShopOwner) unless current_user.nil? || !current_user.full_personal_infos?
+     @current_shopowner ||=current_user.becomes(ShopOwner) unless current_user.nil? || !current_user.full_personal_infos?
    end
 
    def require_shopowner
      unless current_shopowner
+       flash[:warning] = 'you are not a shopowner'
        redirect_to '/'
      end
    end
