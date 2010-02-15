@@ -75,8 +75,10 @@ describe Shop do
     end
 
     it 'should have many categories' do
-      pending
+      @shop.categories.should_not be_nil
+      @shop.categeries.should be_kind_of(Array)
     end
+
 
   end # End describe asscociation
 
