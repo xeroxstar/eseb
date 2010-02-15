@@ -1,9 +1,14 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
- vietnam:
-   name: Viet Nam
-   shortname: VN
-   id: 1
+vietnam:
+ name: Viet Nam
+ shortname: VN
+ id: 1
+
+america:
+ name: America
+ shortname: us
+ id: 2
 #
 # two:
 #   column: value

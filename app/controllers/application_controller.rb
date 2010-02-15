@@ -9,12 +9,12 @@ class ApplicationController < ActionController::Base
    filter_parameter_logging :password
    helper_method :current_user
 
-   def current_shopowner
-     @current_shopowner ||=current_user.becomes(ShopOwner) unless current_user.nil? || !current_user.full_personal_infos?
-   end
+#   def current_shopowner
+#     @current_shopowner ||=current_user.becomes(ShopOwner) unless current_user.nil? || !current_user.full_personal_infos?
+#   end
 
-   def require_shopowner
-     unless current_shopowner
+   def full_personal_info_required
+     unless current_user.full_personal_infos?
        flash[:warning] = 'you are not a shopowner'
        redirect_to '/'
      end

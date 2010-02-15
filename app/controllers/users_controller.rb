@@ -19,7 +19,7 @@ class UsersController < ApplicationController
   def update
     @user = current_user
     @user.update_attributes(params[:user])
-    if @user.shop.nil? && @user.full_personal_infos?
+    if !@user.is_a?(ShopOwner) && @user.full_personal_infos?
       redirect_to new_shop_path
     else
       render :edit

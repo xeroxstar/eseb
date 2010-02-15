@@ -2,7 +2,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 include AuthenticatedTestHelper
 include MockTestHelpers
 describe ShopsController do
-  fixtures :users, :shops
   describe 'route genration' do
     it "should route shops's 'show' action correctly" do
       {:get=>'/shops/shortname'}.should route_to(:controller=>'shops',:action=>'show',:id=>'shortname')
@@ -29,11 +28,11 @@ describe ShopsController do
     end
 
     it "should route shops's 'deactive' action correctly" do
-      {:put=>'/shops/1/deactive'}.should route_to(:controller=>'shops',:action=>'deactive',:id=>'1')
+      {:put=>'/shops/deactive'}.should route_to(:controller=>'shops',:action=>'deactive')
     end
 
     it "should route shops's 'reactive' action correctly" do
-      {:put=>'/shops/1/reactive'}.should route_to(:controller=>'shops',:action=>'reactive',:id=>'1')
+      {:put=>'/shops/reactive'}.should route_to(:controller=>'shops',:action=>'reactive')
     end
 
     it "should not route to destroy action" do
@@ -41,7 +40,6 @@ describe ShopsController do
     end
   end
   describe 'actions' do
-    fixtures :users, :shops
     describe 'require login with' do
       before(:each) do
         logout_keeping_session!
@@ -56,7 +54,7 @@ describe ShopsController do
         end
       end
     end
-    describe 'require shopowner' do
+    describe 'require full personal info' do
       before(:each) do
         @user = users(:quentin)
         login_as(@user)
@@ -93,21 +91,20 @@ describe ShopsController do
       end
 
       it 'my shop' do
-        @user = users(:shopowner)
+        @user = users(:robdoan)
         login_as(@user)
-        post :create, :shop=>@shop_valid_data
         get :myshop
-        controller.current_shopowner.shop.should_not be_nil
+        controller.current_user.shop.should_not be_nil
+        controller.current_user.should be_kind_of(ShopOwner)
         response.should render_template('shops/myshop.html')
       end
 
       it 'redirect to create shop when I go to my shop and havent create shop ' do
-        @user = users(:shopowner)
+        @user = users(:no_shop_user)
         login_as(@user)
         get :myshop
         response.should redirect_to(new_shop_url)
       end
-
     end
 
     describe 'create/update shop' do
@@ -117,7 +114,7 @@ describe ShopsController do
 
       describe 'user have enough personal infomation' do
         before(:each) do
-          @user = users(:shopowner)
+          @user = users(:no_shop_user)
           login_as(@user)
         end
 
@@ -141,8 +138,6 @@ describe ShopsController do
           end.should raise_error
         end
 
-
-
         it 'should go to my shop if update valid shop data' do
           create_shop(@user,@shop_valid_data)
           lambda do
@@ -162,7 +157,7 @@ describe ShopsController do
         end
 
         it 'should render raise error when I try to edit shop of another user' do
-          @user2 = users(:shopowner_quy)
+          @user2 = users(:shopowner)
           create_shop(@user2,@shop_valid_data)
           lambda do
             put :update ,:id=>@shop.id, :shop=>@shop_valid_data.merge(:shortname=>nil)
@@ -186,6 +181,20 @@ describe ShopsController do
           end.should_not change(Shop,:count)
         end
       end
+    end
+    it 'deactive' do
+      @user = users(:robdoan)
+      login_as(@user)
+      put :deactive
+      @user.shop.should be_unactive
+    end
+    it  'reactive' do
+      @user = users(:robdoan)
+      login_as(@user)
+      @user.shop.deactivate
+      @user.shop.should be_unactive
+      put :reactive
+      assigns[:shop].should be_active
     end
   end
   def create_shop(user,data)

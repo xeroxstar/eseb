@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 
   validates_length_of       :address, :minimum=>12, :allow_blank=>true
 
-  validates_presence_of :first_name,:last_name,:address,:social_id,:country_id,:city , :if =>:has_shop?
+
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
@@ -38,8 +38,18 @@ class User < ActiveRecord::Base
 
   # Asccociation
   belongs_to :country
-  has_one :shop
+  #  has_one :shop
 
+  class << self
+    # This method is worked with the single-table inheritance model.
+    # Create ShopOwner object when user record have enough infomation
+    def instantiate(record)
+      if Shop.exists?(:user_id=>record['id'])
+        record[inheritance_column] = 'ShopOwner'
+      end
+      super(record)
+    end
+  end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
@@ -69,17 +79,29 @@ class User < ActiveRecord::Base
     return !(first_name.blank? || last_name.blank? || social_id.blank? || city.blank? || address.blank? || country.blank?)
   end
 
+  # Create shop
+  def create_shop(attrs={})
+    if full_personal_infos?
+      shop_attrs = attrs.merge(:user_id=>id)
+      shop = Shop.new(shop_attrs)
+      shop.save
+      self.reload
+      shop
+    end
+  end
+
   protected
 
   # does user have a shop?
-  def has_shop?
-    return shop
-  end
+  #  def has_shop?
+  #    return shop
+  #  end
 
   def make_activation_code
     self.deleted_at = nil
     self.activation_code = self.class.make_token
   end
+
 
 
 end

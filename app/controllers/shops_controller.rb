@@ -1,6 +1,6 @@
 class ShopsController < ApplicationController
   before_filter :login_required, :except=>[:show]
-  before_filter :require_shopowner, :except=>[:show]
+  before_filter :full_personal_info_required, :except=>[:show]
   def new
     @shop = Shop.new
   end
@@ -14,11 +14,11 @@ class ShopsController < ApplicationController
   end
 
   def edit
-    @shop = current_shopowner.shop
+    @shop = current_user.shop
   end
 
   def update
-    @shop = current_shopowner.shop
+    @shop = current_user.shop
     if @shop.update_attributes(params[:shop])
       redirect_to my_shop_path
     else
@@ -27,8 +27,8 @@ class ShopsController < ApplicationController
   end
 
   def create
-    @shop = current_shopowner.build_shop(params[:shop])
-    if @shop.save
+    @shop= current_user.create_shop(params[:shop])
+    if @shop.errors.empty?
       redirect_to(my_shop_path)
     else
       render :action=>'new'
@@ -36,21 +36,22 @@ class ShopsController < ApplicationController
   end
 
   def myshop
-    @shop = current_shopowner.shop
-    unless @shop
-      redirect_to :action=>:new
+    if current_user.is_a?(ShopOwner)
+      @shop = current_user.shop
+    else
+       redirect_to :action=>:new
     end
   end
 
   def deactive
-    @shop = current_shopowner.shop
+    @shop = current_user.shop
     @shop.deactivate
-    redirect_to edit_user_url
+    redirect_to my_account_url
   end
 
   def reactive
-    @shop = current_shopowner.shop
-    @shop.deactive
+    @shop = current_user.shop
+    @shop.activate
   end
 
 end

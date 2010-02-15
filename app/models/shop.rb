@@ -17,6 +17,10 @@ class Shop < ActiveRecord::Base
     self.status == DEACTIVE
   end
 
+  def active?
+    self.status == ACTIVE
+  end
+
   def activate
     update_attribute(:status,ACTIVE)
   end

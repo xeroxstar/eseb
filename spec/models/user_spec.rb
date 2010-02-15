@@ -6,8 +6,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 include AuthenticatedTestHelper
 
 describe User do
-  fixtures :users
-
   describe 'being created' do
     before do
       @user = nil
@@ -223,13 +221,13 @@ describe User do
 
   it 'have engouh information when it filled first_name, last_name, city, adrress and country' do
     @user = users(:quentin)
-    @user = become_shop_owner
+    @user = update_full_info
     @user.should be_full_personal_infos
   end
   [:last_name,:first_name,:city,:address].each do |attr|
     it "have not engouh informations when it missing #{attr}" do
       @user = users(:quentin)
-      @user = become_shop_owner(attr=>nil)
+      @user = update_full_info(attr=>nil)
       @user.should_not be_full_personal_infos
     end
   end
@@ -323,19 +321,42 @@ describe User do
   end
   describe 'util methods' do
     before(:each) do
-       @user = users(:quentin)
+      @user = users(:quentin)
+      @shopowner = users(:robdoan)
     end
     ['city','first_name','last_name','address','social_id','city','country_id'].each do |attr|
       it "full_personal_infos? should return false if #{attr} nil or blank" do
-        become_shop_owner(attr.to_sym=>nil)
+        update_full_info(attr.to_sym=>nil)
         @user.should_not be_full_personal_infos
       end
     end
 
     it 'full_personal_infos? should return true if user is a shop ower or all info already filled' do
-        become_shop_owner
-        @user.should be_full_personal_infos
+      update_full_info
+      @user.should be_full_personal_infos
     end
+
+    it 'should be able to create a shop if full_personal_infos?' do
+      update_full_info
+      @user.should be_full_personal_infos
+      lambda {
+        @user.create_shop(:name=>'Rob Doan',:shortname=>'loveshop').should be_kind_of(Shop)
+      }.should change(Shop, :count).by(1)
+    end
+
+    it 'should not be able to create a shop unless full_personal_infos?' do
+      @user.should_not be_full_personal_infos
+      lambda {
+        @user.create_shop(:name=>'Rob Doan',:shortname=>'loveshop').should be_nil
+      }.should change(Shop, :count).by(0)
+    end
+
+    it 'should not be able to create a shop when already have shop' do
+      lambda{
+        @shopowner.create_shop(:name=>'Rob Doan',:shortname=>'loveshop')
+      }.should_not change(Shop,:count)
+    end
+
   end
 
   protected
@@ -345,7 +366,7 @@ describe User do
     record
   end
 
-  def become_shop_owner(shop_owner_attrs={})
+  def update_full_info(shop_owner_attrs={})
     @shop_owner_infos = {:first_name=>"Doan",
       :last_name=>'Tran Quy',
       :address=>'37 Hung Vuong, Long Khanh, Dong nai',
