@@ -1,9 +1,9 @@
 <%=@shop.name%>
 <%=render :partial=>'shop'%>
 <%if @shop.unactive?%>
-  <a href="/shop_active">Reactive</a>
+  <%=link_to('Reactive',reactive_shops_url,{:method=>:put})%>
 <%else%>
-  <a href="/shop_deactive">Deactive</a>
+  <%=link_to('Deactive',deactive_shops_url,{:method=>:put})%>
 <%end%>
 
 

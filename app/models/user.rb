@@ -21,9 +21,9 @@ class User < ActiveRecord::Base
   validates_uniqueness_of   :email
   validates_format_of       :email,    :with => Authentication.email_regex, :message => Authentication.bad_email_message
 
-  validates_format_of       :first_name, :with=>NAME_REG, :allow_nil =>true
+  validates_format_of       :first_name, :with=>NAME_REG, :allow_blank =>true
 
-  validates_format_of       :last_name, :with=>NAME_REG , :allow_nil =>true
+  validates_format_of       :last_name, :with=>NAME_REG , :allow_blank =>true
 
   validates_length_of       :address, :minimum=>12, :allow_blank=>true
 
@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
   # Check user whether have enough personal infos or not to create a shop
   #   return true. When first_name, last_name, city, address, country is not nil
   def full_personal_infos?
-    return !(first_name.blank? || last_name.blank? || social_id.blank? || city.blank? || address.blank? || country.blank?)
+    return !(first_name.blank? || last_name.blank? || social_id.blank? || city.blank? || address.blank? || country_id.blank?)
   end
 
   # Create shop

@@ -7,6 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   map.my_account '/my_account.:format' , :controller=>'users',:action=>'edit'
   map.my_shop '/myshop',:controller=>'shops', :action=>'myshop'
   map.resources :users,:except =>[:edit]
+  map.resources :shop_owners, :controller=>'users'
   map.resources :shops,:collection=>{:deactive=>:put,
                                  :reactive=>:put},
                                  :except=>[:destroy]

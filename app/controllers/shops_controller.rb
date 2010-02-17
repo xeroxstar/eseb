@@ -39,14 +39,15 @@ class ShopsController < ApplicationController
     if current_user.is_a?(ShopOwner)
       @shop = current_user.shop
     else
-       redirect_to :action=>:new
+      redirect_to :action=>:new
     end
   end
 
   def deactive
     @shop = current_user.shop
-    @shop.deactivate
-    redirect_to my_account_url
+    if @shop.deactivate
+      redirect_to my_account_url
+    end
   end
 
   def reactive
