@@ -3,7 +3,8 @@ class Shop < ActiveRecord::Base
   DEACTIVE = 2
   SHORTNAME_FORMAT = /^[a-zA-Z0-9\-]{3,}$/i
   belongs_to :owner, :class_name=>'ShopOwner', :foreign_key=>'user_id'
-
+  has_many :products
+  has_many :categories , :through=>:products
   #validation
   validates_presence_of     :shortname
   validates_format_of       :shortname , :with=>SHORTNAME_FORMAT

@@ -71,12 +71,13 @@ describe Shop do
     end
 
     it 'should have many products' do
-      pending
+      @shop.products.should_not be_nil
+      @shop.products.should be_kind_of(Array)
     end
 
     it 'should have many categories' do
       @shop.categories.should_not be_nil
-      @shop.categeries.should be_kind_of(Array)
+      @shop.categories.should be_kind_of(Array)
     end
 
 
