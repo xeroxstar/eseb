@@ -4,4 +4,8 @@ vendor/gems/*
 db/schema.rb
 nbproject
 nbproject/*
-vendor/plugins/*
+vender/plugins/rails-footnotes
+vendor/plugins/rails-footnotes/*
+config/initializers/footnote_load.rb
+coverage
+coverage/*
