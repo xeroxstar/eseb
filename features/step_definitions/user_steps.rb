@@ -22,8 +22,10 @@ Given "$an $user_type user logged in as '$login'" do |_, user_type, login|
   log_in_user!
 end
 
-Given "$actor is logged in" do |_, login|
-  log_in_user! @user_params || named_user(login)
+Given "$actor is logged in" do |login|
+  log_out!
+  activated_user login_name(login)
+  log_in_user! @valid_data
 end
 
 Given "there is no $user_type user named '$login'" do |_, login|
@@ -74,6 +76,7 @@ end
 Then /^(?:I|they) should receive an email with a link to a (.+) page$/ do |page|
   open_last_email_for(last_email_address)
   links_in_email(current_email).should contain(page)
+  links_in_email(current_email).should contain(@user.activation_code)
 end
 
 def named_user login
@@ -81,7 +84,7 @@ def named_user login
     'admin'   => {'id' => 1, 'login' => 'addie', 'password' => '1234addie', 'email' => 'admin@example.com',       },
     'oona'    => {          'login' => 'oona',   'password' => '1234oona',  'email' => 'unactivated@example.com'},
     'reggie'  => {          'login' => 'reggie', 'password' => 'monkey',    'email' => 'registered@example.com' },
-    }
+  }
   user_params[login.downcase]
 end
 
@@ -110,6 +113,11 @@ def create_user(user_params={})
   @user = User.find_by_login(user_params['login'])
 end
 
+def login_name(login)
+  @valid_data = {'login' => login,   'password' => '1234oona',  'email' => 'unactivated@example.com'}
+  return @valid_data
+end
+
 def create_user!(user_type, user_params)
   user_params['password_confirmation'] ||= user_params['password'] ||= user_params['password']
   create_user user_params
@@ -118,7 +126,12 @@ def create_user!(user_type, user_params)
 
 end
 
-
+def activated_user(user_params)
+  create_user!('',user_params)
+  @user.should be_an_instance_of(User)
+  @user.activate!
+  @user.should be_active
+end
 
 def log_in_user user_params=nil
   @user_params ||= user_params
@@ -132,5 +145,5 @@ def log_in_user! *args
   log_in_user *args
   response.should redirect_to('/')
   follow_redirect!
-  response.should have_flash("notice", /Logged in successfully/)
+  response.should have_flash("notice", :content=>"Logged in successfully")
 end

@@ -1,0 +1,12 @@
+<%form_for user do |f|%>
+  <%=error_messages_for :user%>
+  <p>Username: <%=user.login%></p>
+  <p>Email: <%=user.email%></p>
+  <p>First name: <%=f.text_field :first_name%></p>
+  <p>Last name: <%=f.text_field :last_name%></p>
+  <p>Address: <%=f.text_field :address%></p>
+  <p>City: <%=f.text_field :city%></p>
+  <p>SocialId: <%=f.text_field :social_id%></p>
+  <p>Contry: <%=f.select :country_id,Country.all.collect{|c| [c.name,c.id]},{:include_blank=>'Select a country' }%></p>
+  <p><%=f.submit%></p>
+<%end%>

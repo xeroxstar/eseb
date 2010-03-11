@@ -6,8 +6,6 @@ require File.dirname(__FILE__) + '/../spec_helper'
 include AuthenticatedTestHelper
 
 describe User do
-  fixtures :users
-
   describe 'being created' do
     before do
       @user = nil
@@ -47,7 +45,7 @@ describe User do
 
   describe 'allows legitimate logins:' do
     ['123', '1234567890_234567890_234567890_234567890',
-     'hello.-_there@funnychar.com'].each do |login_str|
+      'hello.-_there@funnychar.com'].each do |login_str|
       it "'#{login_str}'" do
         lambda do
           u = create_user(:login => login_str)
@@ -58,8 +56,8 @@ describe User do
   end
   describe 'disallows illegitimate logins:' do
     ['12', '1234567890_234567890_234567890_234567890_', "tab\t", "newline\n",
-     "Iñtërnâtiônàlizætiøn hasn't happened to ruby 1.8 yet",
-     'semicolon;', 'quote"', 'tick\'', 'backtick`', 'percent%', 'plus+', 'space '].each do |login_str|
+      "Iñtërnâtiônàlizætiøn hasn't happened to ruby 1.8 yet",
+      'semicolon;', 'quote"', 'tick\'', 'backtick`', 'percent%', 'plus+', 'space '].each do |login_str|
       it "'#{login_str}'" do
         lambda do
           u = create_user(:login => login_str)
@@ -92,9 +90,9 @@ describe User do
 
   describe 'allows legitimate emails:' do
     ['foo@bar.com', 'foo@newskool-tld.museum', 'foo@twoletter-tld.de', 'foo@nonexistant-tld.qq',
-     'r@a.wk', '1234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890@gmail.com',
-     'hello.-_there@funnychar.com', 'uucp%addr@gmail.com', 'hello+routing-str@gmail.com',
-     'domain@can.haz.many.sub.doma.in', 'student.name@university.edu'
+      'r@a.wk', '1234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890@gmail.com',
+      'hello.-_there@funnychar.com', 'uucp%addr@gmail.com', 'hello+routing-str@gmail.com',
+      'domain@can.haz.many.sub.doma.in', 'student.name@university.edu'
     ].each do |email_str|
       it "'#{email_str}'" do
         lambda do
@@ -106,10 +104,10 @@ describe User do
   end
   describe 'disallows illegitimate emails' do
     ['!!@nobadchars.com', 'foo@no-rep-dots..com', 'foo@badtld.xxx', 'foo@toolongtld.abcdefg',
-     'Iñtërnâtiônàlizætiøn@hasnt.happened.to.email', 'need.domain.and.tld@de', "tab\t", "newline\n",
-     'r@.wk', '1234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890@gmail2.com',
-     # these are technically allowed but not seen in practice:
-     'uucp!addr@gmail.com', 'semicolon;@gmail.com', 'quote"@gmail.com', 'tick\'@gmail.com', 'backtick`@gmail.com', 'space @gmail.com', 'bracket<@gmail.com', 'bracket>@gmail.com'
+      'Iñtërnâtiônàlizætiøn@hasnt.happened.to.email', 'need.domain.and.tld@de', "tab\t", "newline\n",
+      'r@.wk', '1234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890-234567890@gmail2.com',
+      # these are technically allowed but not seen in practice:
+      'uucp!addr@gmail.com', 'semicolon;@gmail.com', 'quote"@gmail.com', 'tick\'@gmail.com', 'backtick`@gmail.com', 'space @gmail.com', 'bracket<@gmail.com', 'bracket>@gmail.com'
     ].each do |email_str|
       it "'#{email_str}'" do
         lambda do
@@ -122,7 +120,7 @@ describe User do
 
   describe 'allows legitimate names:' do
     ['Andre The Giant (7\'4", 520 lb.) -- has a posse',
-     '', '1234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890',
+      '', '1234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890',
     ].each do |name_str|
       it "'#{name_str}'" do
         lambda do
@@ -134,8 +132,8 @@ describe User do
   end
   describe "disallows illegitimate names" do
     ["tab\t", "newline\n",
-     '1234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890_',
-     ].each do |name_str|
+      '1234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890_234567890_',
+    ].each do |name_str|
       it "'#{name_str}'" do
         lambda do
           u = create_user(:name => name_str)
@@ -175,25 +173,25 @@ describe User do
     User.authenticate('wrongquentin@example.com', 'monkey').should_not == users(:quentin)
   end
 
- if REST_AUTH_SITE_KEY.blank?
-   # old-school passwords
-   it "authenticates a user against a hard-coded old-style password" do
-     User.authenticate('old_password_holder', 'test').should == users(:old_password_holder)
-   end
- else
-   it "doesn't authenticate a user against a hard-coded old-style password" do
-     User.authenticate('old_password_holder', 'test').should be_nil
-   end
+  if REST_AUTH_SITE_KEY.blank?
+    # old-school passwords
+    it "authenticates a user against a hard-coded old-style password" do
+      User.authenticate('old_password_holder', 'test').should == users(:old_password_holder)
+    end
+  else
+    it "doesn't authenticate a user against a hard-coded old-style password" do
+      User.authenticate('old_password_holder', 'test').should be_nil
+    end
 
-   # New installs should bump this up and set REST_AUTH_DIGEST_STRETCHES to give a 10ms encrypt time or so
-   desired_encryption_expensiveness_ms = 0.1
-   it "takes longer than #{desired_encryption_expensiveness_ms}ms to encrypt a password" do
-     test_reps = 100
-     start_time = Time.now; test_reps.times{ User.authenticate('quentin', 'monkey'+rand.to_s) }; end_time   = Time.now
-     auth_time_ms = 1000 * (end_time - start_time)/test_reps
-     auth_time_ms.should > desired_encryption_expensiveness_ms
-   end
- end
+    # New installs should bump this up and set REST_AUTH_DIGEST_STRETCHES to give a 10ms encrypt time or so
+    desired_encryption_expensiveness_ms = 0.1
+    it "takes longer than #{desired_encryption_expensiveness_ms}ms to encrypt a password" do
+      test_reps = 100
+      start_time = Time.now; test_reps.times{ User.authenticate('quentin', 'monkey'+rand.to_s) }; end_time   = Time.now
+      auth_time_ms = 1000 * (end_time - start_time)/test_reps
+      auth_time_ms.should > desired_encryption_expensiveness_ms
+    end
+  end
 
   #
   # Authentication
@@ -219,6 +217,19 @@ describe User do
     users(:quentin).remember_token.should_not be_nil
     users(:quentin).remember_token_expires_at.should_not be_nil
     users(:quentin).remember_token_expires_at.between?(before, after).should be_true
+  end
+
+  it 'have engouh information when it filled first_name, last_name, city, adrress and country' do
+    @user = users(:quentin)
+    @user = update_full_info
+    @user.should be_full_personal_infos
+  end
+  [:last_name,:first_name,:city,:address].each do |attr|
+    it "have not engouh informations when it missing #{attr}" do
+      @user = users(:quentin)
+      @user = update_full_info(attr=>nil)
+      @user.should_not be_full_personal_infos
+    end
   end
 
   it 'remembers me until one week' do
@@ -293,7 +304,7 @@ describe User do
     include EmailSpec::Matchers
 
     before(:each) do
-#      create_user
+      #      create_user
     end
     it 'should be send a sign up notificaiton after user register' do
       UserMailer.should_receive(:deliver_signup_notification)
@@ -308,11 +319,62 @@ describe User do
       user = create_user(:password=>nil)
     end
   end
+  describe 'util methods' do
+    before(:each) do
+      @user = users(:quentin)
+      @shopowner = users(:robdoan)
+    end
+    ['city','first_name','last_name','address','social_id','city','country_id'].each do |attr|
+      it "full_personal_infos? should return false if #{attr} nil or blank" do
+        update_full_info(attr.to_sym=>nil)
+        @user.should_not be_full_personal_infos
+      end
+    end
 
-protected
+    it 'full_personal_infos? should return true if user is a shop ower or all info already filled' do
+      update_full_info
+      @user.should be_full_personal_infos
+    end
+
+    it 'should be able to create a shop if full_personal_infos?' do
+      update_full_info
+      @user.should be_full_personal_infos
+      lambda {
+        @user.create_shop(:name=>'Rob Doan',:shortname=>'loveshop').should be_kind_of(Shop)
+      }.should change(Shop, :count).by(1)
+    end
+
+    it 'should not be able to create a shop unless full_personal_infos?' do
+      @user.should_not be_full_personal_infos
+      lambda {
+        @user.create_shop(:name=>'Rob Doan',:shortname=>'loveshop').should be_nil
+      }.should change(Shop, :count).by(0)
+    end
+
+    it 'should not be able to create a shop when already have shop' do
+      lambda{
+        @shopowner.create_shop(:name=>'Rob Doan',:shortname=>'loveshop')
+      }.should_not change(Shop,:count)
+    end
+
+  end
+
+  protected
   def create_user(options = {})
     record = User.new({ :login => 'quire', :email => 'quire@example.com', :password => 'quire69', :password_confirmation => 'quire69' }.merge(options))
     record.register! if record.valid?
     record
+  end
+
+  def update_full_info(shop_owner_attrs={})
+    @shop_owner_infos = {:first_name=>"Doan",
+      :last_name=>'Tran Quy',
+      :address=>'37 Hung Vuong, Long Khanh, Dong nai',
+      :social_id=>'B3271477',
+      :city=>'Ho Chi Minh',
+      :country_id=>1
+    }.merge(shop_owner_attrs)
+    @user.update_attributes(@shop_owner_infos)
+    @user
   end
 end

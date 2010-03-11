@@ -1,0 +1,14 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+ crazy_love:
+   id: 1
+   shortname: quynhpham
+   name: quynh pham
+   status: <%=Shop::ACTIVE%>
+   owner: shopowner
+ pinky_love:
+   id: 2
+   shortname: pinky_love
+   name: Thuy Duong
+   status: <%=Shop::DEACTIVE%>
+   user_id: 6

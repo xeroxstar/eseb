@@ -1,4 +1,3 @@
-
 quentin:
   id:                        1
   login:                     quentin
@@ -8,10 +7,10 @@ quentin:
   created_at:                <%= 5.days.ago.to_s :db  %>
   remember_token_expires_at: <%= 1.days.from_now.to_s :db%>
   remember_token:            77de68daecd823babbb58edb1c8e14d7106e83bb
-  activation_code:           
+  activation_code:
   activated_at:              <%= 5.days.ago.to_s :db %>
   state:                     active
-      
+
 aaron:
   id:                        2
   login:                     aaron
@@ -19,13 +18,11 @@ aaron:
   salt:                      da4b9237bacccdf19c0760cab7aec4a8359010b0 # SHA1('1')
   crypted_password:          27ce01841ff437c09f01d9ab99de127043fa6efb # 'monkey'
   created_at:                <%= 1.days.ago.to_s :db %>
-  remember_token_expires_at: 
-  remember_token:            
+  remember_token_expires_at:
+  remember_token:
   activation_code:           1b6453892473a467d07372d45eb05abc2031647a
-  activated_at:              
-
+  activated_at:
   state:                     pending
-
 
 old_password_holder:
   id:                        3
@@ -35,8 +32,64 @@ old_password_holder:
   crypted_password:          00742970dc9e6319f8019fd54864d3ea740f04b1 # test
   created_at:                <%= 1.days.ago.to_s :db %>
 
-  activation_code:           
+  activation_code:
   activated_at:              <%= 5.days.ago.to_s :db %>
-
-
   state:                     active
+
+shopowner:
+  id:                        5
+  login:                   quynhpham
+  email:                     quynhpham@example.com
+  salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+  crypted_password:          8f85b85e25b8c0e1f8d937414410e567a1c74f21 # 'monkey'
+  created_at:                <%= 5.days.ago.to_s :db  %>
+  remember_token_expires_at: <%= 1.days.from_now.to_s :db%>
+  remember_token:            77de68d223bb
+  activation_code:
+  activated_at:              <%= 5.days.ago.to_s :db %>
+  state:                     active
+  first_name: Quynh
+  last_name: pham
+  social_id: 123412321
+  city: Penn Sate
+  address: Penn Sate american
+  country_id: 2
+
+
+robdoan:
+  id:                        6
+  login:                     quydoantra
+  email:                     quydoantra@example.com
+  salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+  crypted_password:          8f85b85e25b8c0e1f8d937414410e567a1c74f21 # 'monkey'
+  created_at:                <%= 5.days.ago.to_s :db  %>
+  remember_token_expires_at: <%= 1.days.from_now.to_s :db%>
+  remember_token:            77de68d22bb
+  activation_code:
+  activated_at:              <%= 5.days.ago.to_s :db %>
+  state:                     active
+  first_name: Quy
+  last_name: DOan
+  social_id: 12341232121
+  city: Dong Nai
+  address: 36  Hung Vuong Long Khanh Dong Nai
+  country_id: 1
+
+no_shop_user:
+  id:                        7
+  login:                   noshop
+  email:                     noshop@example.com
+  salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+  crypted_password:          8f85b85e25b8c0e1f8d937414410e567a1c74f21 # 'monkey'
+  created_at:                <%= 5.days.ago.to_s :db  %>
+  remember_token_expires_at: <%= 1.days.from_now.to_s :db%>
+  remember_token:            77de68d223bb
+  activation_code:
+  activated_at:              <%= 5.days.ago.to_s :db %>
+  state:                     active
+  first_name: NoShop
+  last_name: sample
+  social_id: 123412321
+  city: noshop
+  address: Penn Sate american
+  country_id: 2

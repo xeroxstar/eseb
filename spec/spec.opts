@@ -1,5 +1,5 @@
 --colour
---format specdoc
+--format nested
 --loadby mtime
 --reverse
 --diff

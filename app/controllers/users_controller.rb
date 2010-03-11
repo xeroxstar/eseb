@@ -1,15 +1,29 @@
 class UsersController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
-# include AuthenticatedSystem
+  # include AuthenticatedSystem
 
   # Protect these actions behind an admin login
   # before_filter :admin_required, :only => [:suspend, :unsuspend, :destroy, :purge]
   before_filter :find_user, :only => [:suspend, :unsuspend, :destroy, :purge]
-
+  before_filter :login_required , :only=>[:edit,:update,:suspend,:unsuspend]
 
   # render new.rhtml
   def new
     @user = User.new
+  end
+
+  def edit
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+    @user.update_attributes(params[:user])
+    if !@user.is_a?(ShopOwner) && @user.full_personal_infos?
+      redirect_to new_shop_path
+    else
+      render :edit
+    end
   end
 
   def create
@@ -44,30 +58,31 @@ class UsersController < ApplicationController
   end
 
   def suspend
-    @user.suspend!
+    current_user.suspend!
     redirect_to users_path
   end
 
   def unsuspend
-    @user.unsuspend!
+    current_user.unsuspend!
     redirect_to users_path
   end
 
-  def destroy
-    @user.delete!
-    redirect_to users_path
-  end
+#  def destroy
+#    @user.delete!
+#    redirect_to users_path
+#  end
 
-  def purge
-    @user.destroy
-    redirect_to users_path
-  end
+# only admin can do this action
+#  def purge
+#    @user.destroy
+#    redirect_to users_path
+#  end
 
   # There's no page here to update or destroy a user.  If you add those, be
   # smart -- make sure you check that the visitor is authorized to do so, that they
   # supply their old password along with a new one to update it, etc.
 
-protected
+  protected
   def find_user
     @user = User.find(params[:id])
   end

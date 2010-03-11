@@ -1,6 +1,6 @@
 development:
   user_name: quydoantran@gmail.com
-  password: maiyeuem
+  password: plmokn123
   authentication: :plain
   domain: eseb.com
   address: smtp.gmail.com
