@@ -6,7 +6,8 @@ ActionController::Routing::Routes.draw do |map|
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil
   map.my_account '/my_account.:format' , :controller=>'users',:action=>'edit'
   map.my_shop '/myshop',:controller=>'shops', :action=>'myshop'
-  map.resources :users,:except =>[:edit]
+  map.resources :users,:except =>[:edit], :member=>{ :suspend=>:put,
+                                                     :unsuspend=>:put}
   map.resources :shop_owners, :controller=>'users'
   map.resources :shops,:collection=>{:deactive=>:put,
                                  :reactive=>:put},

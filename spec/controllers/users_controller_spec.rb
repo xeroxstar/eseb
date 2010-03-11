@@ -114,6 +114,10 @@ describe UsersController do
         {:put => "/users/1" }.should route_to(:controller => 'users', :action => 'update',:id=>'1')
       end
 
+       it "should route users's 'suspend' action correctly" do
+        {:put => "/users/1/suspend" }.should route_to(:controller => 'users', :action => 'suspend',:id=>'1')
+      end
+
       it "should route users's 'destroy' action correctly" do
         route_for(:controller => 'users', :action => 'destroy', :id => '1').should == {:path=>"/users/1",:method=>:delete}
       end
@@ -212,6 +216,36 @@ describe UsersController do
         :city=>'Ho Chi Minh',
         :country_id=>1
       }
+    end
+
+    describe 'unlogin user' do
+      before(:each) do
+        logout_keeping_session!
+      end
+      it 'should go to login page when go to suspend page' do
+        put :suspend, :id=>1
+        response.should go_to_login_page
+      end
+      
+      it 'should go to login page when go to unsuspend page' do
+        put :unsuspend, :id=>1
+        response.should go_to_login_page
+      end
+    end
+    
+    it 'should be able to suspend account' do
+      @user = users(:quentin)
+      @user.should be_active
+      login_as(@user)
+      put :suspend, :id=>1
+      controller.current_user.should be_suspended
+    end
+
+    it 'should be able to unsuspend account' do
+      @user = users(:quentin)
+      login_as(@user)
+      controller.current_user.should_receive(:unsuspend!)
+      put :unsuspend, :id=>@user.id
     end
 
     describe 'edit action' do

@@ -6,11 +6,12 @@ set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 #set :scm_passphrase, "RobdaMAN"
 set :user, "rob"
-set :branch, :default
+set :branch, 'master'
+set :ssh_options, { :forward_agent => true }
 set :deploy_via, :remote_cache
 set :rails_env, :production
 
-set :deploy_to, 'server'
+set :deploy_to, '/var/www/eseb'
 
 
 role :web, "localhost"                          # Your HTTP server, Apache/etc
