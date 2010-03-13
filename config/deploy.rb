@@ -1,5 +1,8 @@
+#set :stages, %w(staging production)
+#set :default_stage, "production"
+#require 'capistrano/ext/multistage'
 default_run_options[:pty] = true
-set :application, "weeshop"
+set :application, "eseb"
 set :repository,  "git@github.com:RobDoan/eseb.git"
 
 set :scm, :git
@@ -40,5 +43,10 @@ namespace :deploy do
   [:start, :stop].each do |t|
     desc "#{t} task is a no-op with mod_rails"
     task t, :roles => :app do ; end
+  end
+
+  task :copy_database_yml, :roles => :app do
+    db_config = "/var/www/#{application}/conf/database.yml"
+    run "cp #{db_config} #{release_path}/config/database.yml"
   end
 end
