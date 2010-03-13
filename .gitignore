@@ -10,3 +10,4 @@ vendor/plugins/rails-footnotes/*
 config/initializers/footnote_load.rb
 coverage
 coverage/*
+config/deploy.rb
