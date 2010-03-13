@@ -5,18 +5,18 @@ set :repository,  "git@github.com:RobDoan/eseb.git"
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 #set :scm_passphrase, "RobdaMAN"
-set :user, "rob"
+set :user, "robdoan"
 set :branch, 'master'
 set :ssh_options, { :forward_agent => true }
-set :deploy_via, :remote_cache
+#set :deploy_via, :remote_cache
 set :rails_env, :production
 
 set :deploy_to, '/var/www/eseb'
-
+set :copy_cache, true
 
 role :web, "localhost"                          # Your HTTP server, Apache/etc
 role :app, "localhost"                          # This may be the same as your `Web` server
-#role :db,  "localhost", :primary => true # This is where Rails migrations will run
+role :db,  "localhost", :primary => true # This is where Rails migrations will run
 #role :db,  "your slave db-server here"
 
 # If you are using Passenger mod_rails uncomment this:
