@@ -1,0 +1,23 @@
+login: &login
+  adapter: mysql
+  host: localhost
+  username: 
+  password: 
+
+development:
+  <<: *login
+  database: essb_development
+
+production: &production
+  <<: *login
+  database: essb
+
+stagging:
+  <<: *production
+
+test: &test
+  <<: *login
+  database: essb_test
+
+cucumber:
+  <<: *test
