@@ -1,0 +1,6 @@
+body {}
+#wrapper { margin: 5px auto; width: 980px;}
+#menu{ text-align: left; }
+#menu a{ float: right;margin-left: 10px;}
+#banner{}
+.clear{  clear: both; content: '..............................'; visibility: hidden;  height: -1px;  width: 100%;}

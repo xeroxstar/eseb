@@ -2,11 +2,21 @@
   <title>
     ShopViFy-Easy Sell Easy Buy.
   </title>
-  <style>
-    .notice{color:yellow}
-  </style>
+  <%=stylesheet_link_tag 'application' %>
+  <%=stylesheet_link_tag 'skin/default' %>
 </head>
 <body>
-  <div class="notice"><%=flash[:notice]%></div>
-  <%=yield%>
+  <div id="wrapper">
+    <div id="menu">
+      <%=render :partial=>'shared/menu'%>
+      <div class="clear"></div>
+    </div>
+    <div id="banner">
+     <%=yield :banner%>
+    </div>
+    <div class="notice"><%=flash[:notice]%></div>
+    <div id="main-content">
+      <%=yield%>
+    </div>
+  </div>
 </body>

@@ -1,0 +1,16 @@
+/*
+    Document   : default
+    Created on : Mar 14, 2010, 8:47:20 PM
+    Author     : robdoan
+    Description:
+        Define skin/background for default style
+*/
+* {
+  font-size: 12px;
+  font-family: arial;
+}
+.notice{color:yellow}
+#wrapper { background-color: #c8d1dc;}
+#menu {background-color: #d75e5e;}
+#menu a{background: #98efe4; height: 20px;}
+#banner{background:#34343a; }
