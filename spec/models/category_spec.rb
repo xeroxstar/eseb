@@ -27,4 +27,21 @@ describe Category do
       @category.errors_on(:name).should_not be_nil
     }.should_not change(Category,:count)
   end
+
+  describe 'association' do
+    before(:each) do
+      @category = categories(:baby)
+    end
+    it 'has many actived shops' do
+      @category.shops.should be_kind_of(Array)
+      for shop in @category.shops do
+        shop.should be_active
+      end
+    end
+    it 'has many subcategory' do
+      @category.children.should be_kind_of(Array)
+    end
+
+  end
+  
 end

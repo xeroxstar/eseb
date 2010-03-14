@@ -6,9 +6,11 @@
    name: quynh pham
    status: <%=Shop::ACTIVE%>
    owner: shopowner
+   category: baby
  pinky_love:
    id: 2
    shortname: pinky_love
    name: Thuy Duong
    status: <%=Shop::DEACTIVE%>
    user_id: 6
+   category: mobile

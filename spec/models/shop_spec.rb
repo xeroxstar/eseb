@@ -5,10 +5,12 @@ describe Shop do
 
   before(:each) do
     @shop_owner = users(:shopowner).becomes(ShopOwner)
+    @category = categories(:baby)
     @valid_attributes = {
       :name =>"Quynh Khanh",
       :shortname=>'quynhkhanh',
-      :owner=>@shop_owner
+      :owner=>@shop_owner,
+      :category=>@category
     }
   end
 
@@ -22,6 +24,11 @@ describe Shop do
     it 'should have name' do
       create_shop({:name=>nil})
       @shop.errors.on(:name).should_not be_nil
+    end
+
+    it 'should have category_id' do
+      create_shop({:category_id=>nil})
+      @shop.errors.on(:category_id).should_not be_nil
     end
 
     it 'should have shortname' do
@@ -75,11 +82,9 @@ describe Shop do
       @shop.products.should be_kind_of(Array)
     end
 
-    it 'should have many categories' do
-      @shop.categories.should_not be_nil
-      @shop.categories.should be_kind_of(Array)
+    it 'should belongs_to category' do
+      @shop.category.should be_kind_of(Category)
     end
-
 
   end # End describe asscociation
 

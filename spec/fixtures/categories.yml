@@ -2,11 +2,11 @@
 hi_tech:
  name: Computer
  shortname: computer
- 
+
 baby:
   name: Baby
   shortname: baby
-  
+
 mobile:
   name: mobile phone & fax
   shortname: mobile
@@ -26,7 +26,7 @@ fashion:
 electronics:
   name: Electronics
   shortname: electronics
-  
+
 #Subcategories of bay
 baby_sub1:
   name: Baby Safety
@@ -42,7 +42,7 @@ mobile_sub1:
   name: Mobile Phone
   shortname: mobile_phone
   parent: mobile
-  
+
 mobile_sub2:
   name: Accessories
   shortname: mobile_accessories
@@ -53,7 +53,7 @@ electronics_sub1:
   name: Televisions
   shortname: televisions
   parent: electronics
-  
+
 electronics_sub2:
   name: Photography
   shortname: Photography
