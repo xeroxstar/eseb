@@ -6,14 +6,6 @@ hi_tech:
 baby:
   name: Baby
   shortname: baby
-baby_sub1:
-  name: Baby Safety
-  shortname: baby_safety
-  parent: baby
-baby_sub2:
-  name: Cots & Cribs
-  shortname: cots_cribs
-  parent: baby
   
 mobile:
   name: mobile phone & fax
@@ -35,6 +27,34 @@ electronics:
   name: Electronics
   shortname: electronics
   
-#
-# two:
-#   column: value
+#Subcategories of bay
+baby_sub1:
+  name: Baby Safety
+  shortname: baby_safety
+  parent: baby
+baby_sub2:
+  name: Cots & Cribs
+  shortname: cots_cribs
+  parent: baby
+
+# Subcategories of mobile
+mobile_sub1:
+  name: Mobile Phone
+  shortname: mobile_phone
+  parent: mobile
+  
+mobile_sub2:
+  name: Accessories
+  shortname: mobile_accessories
+  parent: mobile
+
+#sub categories of electronics
+electronics_sub1:
+  name: Televisions
+  shortname: televisions
+  parent: electronics
+  
+electronics_sub2:
+  name: Photography
+  shortname: Photography
+  parent: electronics
