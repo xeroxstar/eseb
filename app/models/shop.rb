@@ -2,6 +2,8 @@ class Shop < ActiveRecord::Base
   ACTIVE = 1
   DEACTIVE = 2
   SHORTNAME_FORMAT = /^[a-zA-Z0-9\-]{3,}$/i
+  #call back
+  before_update :unchange_shortname
   belongs_to :owner, :class_name=>'ShopOwner', :foreign_key=>'user_id'
   belongs_to :category
   belongs_to :subcategory, :conditions=>"parent_id is not null", :class_name=>'Category'
@@ -33,6 +35,11 @@ class Shop < ActiveRecord::Base
 
   def deactivate
     update_attribute(:status,DEACTIVE)
+  end
+
+  protected
+  def unchange_shortname
+    self.shortname = shortname_was
   end
 
 end
