@@ -7,7 +7,11 @@ class ShopsController < ApplicationController
   end
 
   def new
-    @shop = Shop.new
+    if current_user.shop
+      redirect_to '/myshop'
+    else
+      @shop = Shop.new
+    end
   end
 
   def show
@@ -58,6 +62,7 @@ class ShopsController < ApplicationController
   def reactive
     @shop = current_user.shop
     @shop.activate
+    redirect_to my_shop_path
   end
 
 end
