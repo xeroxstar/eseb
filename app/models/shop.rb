@@ -14,6 +14,8 @@ class Shop < ActiveRecord::Base
 
   validates_uniqueness_of   :user_id
 
+  named_scope :actived , :conditions=>{:status=>ACTIVE}
+
   def unactive?
     self.status == DEACTIVE
   end

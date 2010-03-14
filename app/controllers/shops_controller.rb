@@ -3,7 +3,7 @@ class ShopsController < ApplicationController
   before_filter :full_personal_info_required, :except=>[:show,:index]
 
   def index
-    @shops = Shop.paginate :per_page=>10, :page=>params[:page]
+    @shops = Shop.actived.paginate :per_page=>10, :page=>params[:page]
   end
 
   def new
@@ -15,7 +15,7 @@ class ShopsController < ApplicationController
   end
 
   def show
-    @shop = Shop.find_by_shortname(params[:id])
+    @shop = Shop.actived.find_by_shortname(params[:id])
     unless @shop
       flash[:warning] = 'Shop can not found'
       redirect_to home_url
