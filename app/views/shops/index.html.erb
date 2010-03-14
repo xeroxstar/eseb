@@ -1,0 +1,8 @@
+<%= page_entries_info @shops %>
+<div id="shops">
+  <%for shop in @shops do%>
+    <%content_tag :div,:id=>"shop_#{shop.id}",:class=>'brief-shop' do%>
+      <%=link_to(shop.name,shop_path(:id=>shop.shortname))%>
+    <%end%>
+  <%end%>
+</div>
