@@ -1,0 +1,23 @@
+/*
+    Document   : shop
+    Created on : Mar 15, 2010, 12:24:44 AM
+    Author     : robdoan
+    Description:
+        Display shop page
+*/
+
+#shop_nav{
+  width: 980px;
+  position: relative;
+  height: 20px;
+}
+#shop_nav #shop_back_links{
+  position: absolute;
+  left: 10px;
+}
+#shop_nav #shop_actions{
+  position: absolute;
+  right: 0px;
+}
+
+

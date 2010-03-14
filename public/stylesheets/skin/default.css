@@ -9,6 +9,9 @@
   font-size: 12px;
   font-family: arial;
 }
+.bg-shop{
+  background-color: #ff00c2;
+}
 .notice{color:yellow}
 #wrapper { background-color: #c8d1dc;}
 #menu {background-color: #d75e5e;}

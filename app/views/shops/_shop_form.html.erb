@@ -1,3 +1,11 @@
 <%=error_messages_for :shop%>
 <p><%=f.label :shortname%><%=f.text_field :shortname%></p>
 <p><%=f.label :name%><%=f.text_field :name%></p>
+<p><%=f.label :category%>
+  <%=collection_select(:shop, :category_id, Category.roots, :id, :name,
+    {:include_blank=>"Select a category"}) %>
+</p>
+<p><%=f.label :subcategory%>
+  <%=collection_select(:shop, :subcategory_id, [], :id, :name,
+      {:include_blank=>"Select a subcategory"}) %>
+</p>

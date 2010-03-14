@@ -1,6 +1,14 @@
-<%#
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-%>
-
+<div id="shop_nav" class="bg-shop">
+  <div id="shop_back_links">
+    Category: <%=link_to(@shop.category.name,@shop.category)%>
+  </div>
+  <div id="shop_actions">
+    <%if @shop.unactive?%>
+      <%=link_to('Reactive',reactive_shops_url,{:method=>:put})%>
+    <%else%>
+      <%=link_to('Deactive',deactive_shops_url,{:method=>:put})%>
+    <%end%>
+    <%=link_to('edit',edit_shop_path(@shop))%>
+  </div>
+</div>
 <%= "_shop.html" %>
