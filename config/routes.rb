@@ -13,6 +13,7 @@ ActionController::Routing::Routes.draw do |map|
                                  :reactive=>:put},
                                  :except=>[:destroy]
   map.resource :session, :only=>[:create,:destroy,:new]
+  map.resources :categories
 
   # The priority is based upon order of creation: first created -> highest priority.
 
