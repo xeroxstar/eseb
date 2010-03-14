@@ -11,3 +11,4 @@ config/initializers/footnote_load.rb
 coverage
 coverage/*
 config/deploy.rb
+db/fixtures/*
