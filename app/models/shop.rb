@@ -4,10 +4,11 @@ class Shop < ActiveRecord::Base
   SHORTNAME_FORMAT = /^[a-zA-Z0-9\-]{3,}$/i
   #call back
   before_update :unchange_shortname
-  belongs_to :owner, :class_name=>'ShopOwner', :foreign_key=>'user_id'
+  belongs_to :owner, :class_name=>'User', :foreign_key=>'user_id'
   belongs_to :category
   belongs_to :subcategory, :conditions=>"parent_id is not null", :class_name=>'Category'
   has_many :products
+  has_many :shop_categories
 #  has_many :categories , :through=>:products
 
   #validation

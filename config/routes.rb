@@ -1,6 +1,4 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :shop_categories
-
   map.logout '/logout', :controller => 'sessions', :action => 'destroy'
   map.login '/login', :controller => 'sessions', :action => 'new'
   map.register '/register', :controller => 'users', :action => 'create'
@@ -9,11 +7,12 @@ ActionController::Routing::Routes.draw do |map|
   map.my_account '/my_account.:format' , :controller=>'users',:action=>'edit'
   map.my_shop '/myshop',:controller=>'shops', :action=>'myshop'
   map.resources :users,:except =>[:edit], :member=>{ :suspend=>:put,
-                                                     :unsuspend=>:put}
+    :unsuspend=>:put}
   map.resources :shop_owners, :controller=>'users'
-  map.resources :shops,:collection=>{:deactive=>:put,
-                                 :reactive=>:put},
-                                 :except=>[:destroy]
+  map.resources :shops,:shallow=>true,:except=>[:destroy],
+                       :collection=>{:deactive=>:put, :reactive=>:put},
+                       :has_many=> [:shop_categories]
+
   map.resource :session, :only=>[:create,:destroy,:new]
   map.resources :categories
 

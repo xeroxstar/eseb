@@ -1,0 +1,12 @@
+<table>
+  <%for shop_category in shop.shop_categories do%>
+    <tr>
+      <td><%=shop_category.name%></td>
+      <td><%=link_to('edit',edit_shop_category_path(shop_category))%></td>
+      <td><%=link_to('delete',shop_category,:method=>:delete,:confirm=>"Are you sure?")%></td>
+    </tr>
+  <%end%>
+</table>
+<%=link_to('new',new_shop_shop_category_path(shop))%>
+
+

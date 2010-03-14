@@ -81,6 +81,10 @@ describe Shop do
       @shop.products.should_not be_nil
       @shop.products.should be_kind_of(Array)
     end
+    it 'should have many shop_categories' do
+      @shop.shop_categories.should_not be_nil
+      @shop.shop_categories.should be_kind_of(Array)
+    end
 
     it 'should belongs_to category' do
       @shop.category.should be_kind_of(Category)
