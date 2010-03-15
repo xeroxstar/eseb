@@ -14,3 +14,4 @@
    status: <%=Shop::DEACTIVE%>
    user_id: 6
    category: mobile
+   owner: robdoan

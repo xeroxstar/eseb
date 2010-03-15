@@ -1,12 +1,7 @@
-<h1>Editing shop_category</h1>
-
-<% form_for(@shop_category) do |f| %>
-  <%= f.error_messages %>
-
+<h1>Edit shop_category</h1>
+<% form_for(@shop_category,:url=>shop_shop_category_path(@shop)) do |f| %>
+  <%=render :partial=>'shop_category_form',:locals=>{:f=>f}%>
   <p>
-    <%= f.submit 'Update' %>
+    <%= f.submit 'Edit' %>
   </p>
 <% end %>
-
-<%= link_to 'Show', @shop_category %> |
-<%= link_to 'Back', shop_categories_path %>

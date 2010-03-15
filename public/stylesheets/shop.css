@@ -6,18 +6,10 @@
         Display shop page
 */
 
-#shop_nav{
-  width: 980px;
-  position: relative;
-  height: 20px;
-}
-#shop_nav #shop_back_links{
-  position: absolute;
-  left: 10px;
-}
-#shop_nav #shop_actions{
-  position: absolute;
-  right: 0px;
-}
+#shop_nav{ width: 980px; position: relative; height: 20px;}
+#shop_nav #shop_back_links{ position: absolute; left: 10px; }
+#shop_nav #shop_actions{ position: absolute; right: 0px;}
+#shop_content {}
+#shop_content #left_side {width: 300px;background-color: #fafa23;}
 
 

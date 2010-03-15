@@ -6,4 +6,5 @@ class Category < ActiveRecord::Base
 
   validates_presence_of :name, :shortname
 
+  named_scope :subcategories, :conditions=>"categories.parent_id is NULL"
 end

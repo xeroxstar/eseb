@@ -8,7 +8,7 @@ require "email_spec/helpers"
 require "email_spec/matchers"
 require "mock_test_helpers"
 require "webrat"
-
+require 'util_helper'
 # Uncomment the next line to use webrat's matchers
 #require 'webrat/integrations/rspec-rails'
 
@@ -35,7 +35,7 @@ Spec::Runner.configure do |config|
   # do so right here. Just uncomment the next line and replace the fixture
   # names with your fixtures.
   #
-  config.global_fixtures = :users,:countries,:categories,:shops
+  config.global_fixtures = :all
   #
   # If you declare global fixtures, be aware that they will be declared
   # for all of your examples, even those that don't use them.
@@ -58,3 +58,4 @@ Spec::Runner.configure do |config|
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
 end
 Spec::Rails::Example::ControllerExampleGroup.send(:include,AuthenticatedSystem)
+Spec::Rails::Example::ControllerExampleGroup.send(:include,UtilHelper)

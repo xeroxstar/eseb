@@ -11,4 +11,10 @@
     <%=link_to('edit',edit_shop_path(@shop))%>
   </div>
 </div>
-<%= "_shop.html" %>
+<div id="shop_content">
+  <div id="left_side">
+    <%=render :partial=>'shop_categories', :locals=>{:shop=>@shop}%>
+  </div>
+  <div id="right_side">
+  </div>
+</div>
