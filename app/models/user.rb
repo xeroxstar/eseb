@@ -1,8 +1,6 @@
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
-  strip_attributes!
-  
   include Authentication
   include Authentication::ByPassword
   include Authentication::ByCookieToken
