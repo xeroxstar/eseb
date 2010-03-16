@@ -6,8 +6,10 @@ class ShopOwner < User
   validates_presence_of :first_name,:last_name,:address,:social_id,:country_id,:city
   has_one :shop, :foreign_key => 'user_id'
 
+  #
+  #  def create_shop(attrs={})
+  #  end
 
-  def create_shop(attrs={})
-  end
-
+  # Check whether user is owner of shop
+ 
 end

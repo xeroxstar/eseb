@@ -89,6 +89,10 @@ class User < ActiveRecord::Base
       shop
     end
   end
+  
+  def owner?(shop)
+    return (id==shop.owner_id)
+  end
 
   protected
 

@@ -10,6 +10,6 @@
 #shop_nav #shop_back_links{ position: absolute; left: 10px; }
 #shop_nav #shop_actions{ position: absolute; right: 0px;}
 #shop_content {}
-#shop_content #left_side {width: 300px;background-color: #fafa23;}
-
+#shop_content #left_side {width: 300px;background-color: #fafa23;float: left;}
+#shop_content #right_side {width: 300px;background-color: #fafa23;float: right;}
 
