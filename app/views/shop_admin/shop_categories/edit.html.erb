@@ -1,5 +1,5 @@
 <h1>Edit shop_category</h1>
-<% form_for(@shop_category,:url=>shop_shop_category_path(@shop)) do |f| %>
+<% form_for(@shop_category,:url=>shop_admin_shop_category_path(@shop_category)) do |f| %>
   <%=render :partial=>'shop_category_form',:locals=>{:f=>f}%>
   <p>
     <%= f.submit 'Edit' %>

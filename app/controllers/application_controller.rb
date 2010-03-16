@@ -22,13 +22,9 @@ class ApplicationController < ActionController::Base
 
   protected
   def owner_of_shop
-    if params[:shop_id]
-      @shop = Shop.find(params[:shop_id])
-    else
-      @shop = current_user.shop
-    end
-    if current_user != @shop.owner
-      flash[:warning] = "you don't have permission to access this page"
+    @shop = current_user.shop
+    unless @shop
+      flash[:warning] = "You don't have shop"
       redirect_to '/'
     end
   end

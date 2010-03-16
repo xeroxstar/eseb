@@ -73,7 +73,7 @@ robdoan:
   social_id: 12341232121
   city: Dong Nai
   address: 36  Hung Vuong Long Khanh Dong Nai
-  country_id: 1
+  country: countries_227
 
 no_shop_user:
   id:                        7
@@ -92,4 +92,4 @@ no_shop_user:
   social_id: 123412321
   city: noshop
   address: Penn Sate american
-  country_id: 2
+  country: countries_227

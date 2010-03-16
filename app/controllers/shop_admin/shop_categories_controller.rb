@@ -1,4 +1,4 @@
-class ShopCategoriesController < ApplicationController
+class ShopAdmin::ShopCategoriesController < ShopAdmin::ApplicationController
   before_filter :owner_of_shop
 
   def new
@@ -32,7 +32,7 @@ class ShopCategoriesController < ApplicationController
   # PUT /shop_categories/1
   # PUT /shop_categories/1.xml
   def update
-    @shop_category = ShopCategory.find(params[:id])
+    @shop_category = @shop.shop_categories.find(params[:id])
     respond_to do |format|
       if @shop_category.update_attributes(params[:shop_category])
         flash[:notice] = 'ShopCategory was successfully updated.'
@@ -46,7 +46,7 @@ class ShopCategoriesController < ApplicationController
   end
 
   def destroy
-    @shop_category = ShopCategory.find(params[:id])
+    @shop_category = @shop.shop_categories.find(params[:id])
     @shop_category.destroy
     respond_to do |format|
       format.html { redirect_to('/myshop') }
