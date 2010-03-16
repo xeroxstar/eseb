@@ -9,12 +9,16 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :users,:except =>[:edit], :member=>{ :suspend=>:put,
     :unsuspend=>:put}
   map.resources :shop_owners, :controller=>'users'
-  map.resources :shops,:shallow=>true,:except=>[:destroy],
-                       :collection=>{:deactive=>:put, :reactive=>:put},
-                       :has_many=> [:shop_categories]
+  map.resources :shops,:except=>[:destroy],
+    :collection=>{:deactive=>:put, :reactive=>:put}
+
 
   map.resource :session, :only=>[:create,:destroy,:new]
   map.resources :categories
+  map.namespace :shop_admin do |shop_owner|
+    shop_owner.resources :products
+    shop_owner.resources :shop_categories
+  end
 
   # The priority is based upon order of creation: first created -> highest priority.
 

@@ -1,1 +1,14 @@
-<%=@shop.name%>
+<div id="shop_content">
+  <h1><%=@shop.name%></h1>
+  <div id="left_side">
+    <ul>
+    <%for shop_category in @shop.shop_categories do%>
+      <li><%=shop_category.name%></li>
+    <%end%>
+  </ul>
+  </div>
+  <div id="shop_right">
+    asdsdf
+  </div>
+  <div class="clear"></div>
+</div>

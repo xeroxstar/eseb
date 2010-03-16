@@ -1,0 +1,5 @@
+<p><%=f.label :name%> <%=f.text_field :name%></p>
+<p>
+  <%=f.label :subcategory%>
+  <%=collection_select(:shop_category, :subcategory_id, Category.subcategories, :id, :name, {:include_blank=>"Select a subcategory"})%>
+</p>

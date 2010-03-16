@@ -18,6 +18,7 @@ describe ShopCategory do
      @shop_category = ShopCategory.create(@valid_attributes.merge(:name=>''))
      @shop_category.errors.on(:name).should_not be_nil
   end
+
   describe 'association' do
     it 'belongs to shop' do
       @shop_category = ShopCategory.create!(@valid_attributes)

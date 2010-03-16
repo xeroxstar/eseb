@@ -226,13 +226,13 @@ describe UsersController do
         put :suspend, :id=>1
         response.should go_to_login_page
       end
-      
+
       it 'should go to login page when go to unsuspend page' do
         put :unsuspend, :id=>1
         response.should go_to_login_page
       end
     end
-    
+
     it 'should be able to suspend account' do
       @user = users(:quentin)
       @user.should be_active
