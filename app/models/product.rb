@@ -5,6 +5,7 @@
 # Shop category must be depend on subcategory
 
 class Product < ActiveRecord::Base
+  strip_attributes!
   belongs_to :subcategory, :foreign_key => 'category_id', :class_name=>'Category'
   belongs_to :shop_category
   belongs_to :shop

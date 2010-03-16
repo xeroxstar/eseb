@@ -1,6 +1,5 @@
 class Category < ActiveRecord::Base
   acts_as_tree :order=>'name'
-
   #asscociation
   has_many :shops, :conditions=>{'shops.status'=>Shop::ACTIVE}
 
