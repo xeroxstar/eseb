@@ -12,3 +12,4 @@ coverage
 coverage/*
 config/deploy.rb
 db/fixtures/*
+public/assets/*

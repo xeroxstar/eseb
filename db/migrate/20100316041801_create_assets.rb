@@ -5,7 +5,7 @@ class CreateAssets < ActiveRecord::Migration
       t.string   "viewable_type", :limit => 50
       t.string   "attachment_content_type"
       t.string   "attachment_file_name"
-      t.integer  "attachment_size"
+      t.integer  "attachment_file_size"
       t.integer  "position"
       t.string   "type", :limit => 75
       t.datetime "attachment_updated_at"
