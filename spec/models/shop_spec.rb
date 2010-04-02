@@ -1,11 +1,11 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Shop do
-  fixtures :users,:shops
+  #  fixtures :users,:shops
 
   before(:each) do
-    @shop_owner = users(:shopowner).becomes(ShopOwner)
-    @category = categories(:baby)
+    @shop_owner = create_activated_shopowner
+    @category = Category.make
     @valid_attributes = {
       :name =>"Quynh Khanh",
       :shortname=>'quynhkhanh',
@@ -94,7 +94,7 @@ describe Shop do
 
   describe 'util' do
     before(:each) do
-      @shop = shops(:crazy_love)
+      @shop = Shop.make(:category=>@category,:owner=>@shop_owner)
     end
 
     it 'should be able to deactive' do

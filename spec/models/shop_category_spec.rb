@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe ShopCategory do
   before(:each) do
-    @shop = shops(:crazy_love)
-    @subcategory = categories(:baby_sub1)
+    @shop = Shop.make
+    @category = Category.make(:name=>'baby')
+    @subcategory = Category.make(:name=>'baby_1',:parent=>@category)
     @valid_attributes = {
       :name=>'shop category',
       :subcategory=>@subcategory,
@@ -14,6 +15,7 @@ describe ShopCategory do
   it "should create a new instance given valid attributes" do
     ShopCategory.create!(@valid_attributes)
   end
+
   it 'require name' do
      @shop_category = ShopCategory.create(@valid_attributes.merge(:name=>''))
      @shop_category.errors.on(:name).should_not be_nil

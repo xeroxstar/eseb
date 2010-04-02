@@ -9,6 +9,8 @@ require "email_spec/matchers"
 require "mock_test_helpers"
 require "webrat"
 require 'util_helper'
+require 'machinist'
+require File.join(File.dirname(__FILE__), 'blueprints')
 # Uncomment the next line to use webrat's matchers
 #require 'webrat/integrations/rspec-rails'
 
@@ -23,7 +25,8 @@ Spec::Runner.configure do |config|
   config.include Webrat::Matchers , :type=>:views
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
-  config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
+  config.before(:each) { Sham.reset }
+  #  config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
 
   # == Fixtures
   #
@@ -35,7 +38,7 @@ Spec::Runner.configure do |config|
   # do so right here. Just uncomment the next line and replace the fixture
   # names with your fixtures.
   #
-  config.global_fixtures = :all
+  #  config.global_fixtures = :all
   #
   # If you declare global fixtures, be aware that they will be declared
   # for all of your examples, even those that don't use them.
@@ -59,3 +62,18 @@ Spec::Runner.configure do |config|
 end
 Spec::Rails::Example::ControllerExampleGroup.send(:include,AuthenticatedSystem)
 Spec::Rails::Example::ControllerExampleGroup.send(:include,UtilHelper)
+
+def create_activated_shopowner(attrs={})
+  attrs = {:country=>Country.make}.merge(attrs)
+  shop_owner  = ShopOwner.make_unsaved(attrs)
+  shop_owner.register!
+  shop_owner.activate!
+  shop_owner
+end
+
+def create_activated_user(attrs={})
+  user  = User.make_unsaved(attrs)
+  user.register!
+  user.activate!
+  user
+end

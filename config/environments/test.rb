@@ -29,6 +29,9 @@ config.action_mailer.delivery_method = :test
 config.gem 'rspec-rails', :lib=>false
 config.gem 'rspec', :lib=>false
 config.gem 'cucumber'
-#  config.gem 'cucumber-rails'
-config.gem 'webrat'
+#config.gem 'cucumber-rails'
+config.gem 'brynary-webrat', :lib => 'webrat'
 config.gem 'email_spec', :lib => 'email_spec'
+config.gem 'faker'
+config.gem 'notahat-machinist', :lib => 'machinist',
+                                :source => 'http://gems.github.com'

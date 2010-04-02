@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe ShopOwner do
   before(:each) do
-    @shop_owner = users(:robdoan)
+    @shop_owner = create_activated_shopowner
     @valid_shop_data = {:name=>'quynhkhanh',:shortname=>'quynhkhanh'}
   end
   describe 'validate attributes' do

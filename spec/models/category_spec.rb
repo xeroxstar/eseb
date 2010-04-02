@@ -30,7 +30,8 @@ describe Category do
 
   describe 'association' do
     before(:each) do
-      @category = categories(:baby)
+      @category = Category.make
+      3.times {@category.shops.make}
     end
     it 'has many actived shops' do
       @category.shops.should be_kind_of(Array)
@@ -41,7 +42,6 @@ describe Category do
     it 'has many subcategory' do
       @category.children.should be_kind_of(Array)
     end
-
   end
-  
+
 end
