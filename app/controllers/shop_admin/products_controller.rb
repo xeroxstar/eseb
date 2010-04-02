@@ -1,5 +1,4 @@
 class ShopAdmin::ProductsController < ShopAdmin::ApplicationController
-  before_filter :login_required, :owner_of_shop
   def new
     @product = @shop.products.new
   end

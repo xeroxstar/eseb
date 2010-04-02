@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
 
   # Asccociation
   belongs_to :country
+  has_many :products
   #  has_one :shop
 
   class << self

@@ -1,7 +1,4 @@
 class ShopsController < ApplicationController
-  before_filter :login_required, :except=>[:show,:index]
-  before_filter :full_personal_info_required, :except=>[:show,:index]
-
   def index
     @shops = Shop.actived.paginate :per_page=>10, :page=>params[:page]
   end

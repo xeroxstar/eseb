@@ -11,5 +11,5 @@ class ShopOwner < User
   #  end
 
   # Check whether user is owner of shop
- 
+
 end

@@ -1,6 +1,5 @@
 class ShopAdmin::MyShopController < ShopAdmin::ApplicationController
   skip_before_filter :owner_of_shop, :only=>[:new,:create]
-
   def index
   end
 

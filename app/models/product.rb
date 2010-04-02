@@ -18,6 +18,7 @@ class Product < ActiveRecord::Base
   named_scope :in_shop_category , lambda{ |shop_category_id|
     {:conditions=> {:shop_category_id=>shop_category_id}}
   }
+  named_scope :avaiable, {:conditions=>{:deleted_at=>nil}}
   # return ids of product images
   def image_ids
     images.map(&:id).join(',')

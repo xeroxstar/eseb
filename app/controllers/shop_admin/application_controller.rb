@@ -1,3 +1,3 @@
 class ShopAdmin::ApplicationController < ApplicationController
-  before_filter :owner_of_shop
+  before_filter :login_required,:owner_of_shop
 end

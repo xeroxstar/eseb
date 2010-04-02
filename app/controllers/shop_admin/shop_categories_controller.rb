@@ -1,5 +1,4 @@
 class ShopAdmin::ShopCategoriesController < ShopAdmin::ApplicationController
-
   def new
     @shop_category = @shop.shop_categories.new
     respond_to do |format|

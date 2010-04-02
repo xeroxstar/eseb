@@ -2,16 +2,15 @@ class Shop < ActiveRecord::Base
   ACTIVE = 1
   DEACTIVE = 2
   SHORTNAME_FORMAT = /^[a-zA-Z0-9\-]{3,}$/i
-  
+
   # plugins
   strip_attributes!
-  
+
   #call back
   before_update :unchange_shortname
   belongs_to :owner, :class_name=>'User', :foreign_key=>'user_id'
   belongs_to :category
   belongs_to :subcategory, :conditions=>"parent_id is not null", :class_name=>'Category'
-  has_many :products
   has_many :shop_categories, :dependent=>:destroy
   has_many :subcategories , :through=>:shop_categories, :source => :subcategory
   has_many :products

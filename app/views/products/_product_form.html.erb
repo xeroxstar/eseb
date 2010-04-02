@@ -1,0 +1,33 @@
+<%content_for(:head) do %>
+  <%=use_swfupload%>
+<%end %>
+<p>
+  <%=f.label :name%>
+  <%=f.text_field :name%>
+</p>
+<p>
+  <%=f.label :description%>
+  <%=f.text_area :description%>
+</p>
+<p>
+  <%=f.label :price%>
+  <%=f.text_field :price%>
+</p>
+<p>
+  <%=f.label :category_id%>
+  <%=f.select :category_id,Category.subcollection,{:include_blank=>"Select a category"}%>
+</p>
+
+<%=f.hidden_field(:image_ids)%>
+<div id="imageThumbs" style="background-color: #ff0;height: 10px;">
+  <%for image in product.images do %>
+    <%=image_tag(image.attachment.url(:mini))%>
+  <%end%>
+</div>
+<div id="fsUploadProgress" class="fieldset flash">
+</div>
+<div id="divStatus">0 Files Uploaded</div>
+<div>
+  <span id="spanButtonPlaceHolder"></span>
+  <input id="btnCancel" type="button" value="Cancel All Uploads" onclick="swfu.cancelQueue();" disabled="disabled" style="margin-left: 2px; font-size: 8pt; height: 29px;"/>
+</div>

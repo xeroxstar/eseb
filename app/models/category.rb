@@ -5,5 +5,20 @@ class Category < ActiveRecord::Base
 
   validates_presence_of :name, :shortname
 
-  named_scope :subcategories, :conditions=>"categories.parent_id is NULL"
+  named_scope :subcategories, :conditions=>"categories.parent_id is NOT NULL"
+  named_scope :main , :conditions=>"categories.parent_id is NULL"
+
+  class << self
+    def collection
+      main.collect { |c|
+        [c.name,c.id]
+      }
+    end
+
+    def subcollection
+      subcategories.collect { |c|
+        [c.name,c.id]
+      }
+    end
+  end
 end
