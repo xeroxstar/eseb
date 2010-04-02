@@ -2,13 +2,11 @@
   <h1><%=@shop.name%></h1>
   <div id="left_side">
     <ul>
-    <%for shop_category in @shop.shop_categories do%>
-      <li><%=shop_category.name%></li>
-    <%end%>
-  </ul>
+      <%=render :partial=>'shop_category', :collection=>@shop.shop_categories, :locals=>{:shop=>@shop}%>
+    </ul>
   </div>
   <div id="shop_right">
-    asdsdf
+    <%=render :partial=>'product', :collection=>@products%>
   </div>
   <div class="clear"></div>
 </div>

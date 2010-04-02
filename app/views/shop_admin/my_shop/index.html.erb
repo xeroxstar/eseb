@@ -1,0 +1,23 @@
+<h1><%=@shop.name%></h1>
+<div id="shop_nav" class="bg-shop">
+  <div id="shop_back_links">
+    Category: <%=link_to(@shop.category.name,@shop.category)%>
+  </div>
+  <div id="shop_actions">
+    <%if @shop.unactive?%>
+      <%=link_to('Reactive',reactive_shop_admin_shop_url,{:method=>:put})%>
+    <%else%>
+      <%=link_to('Deactive',deactive_shop_admin_shop_url,{:method=>:put})%>
+    <%end%>
+    <%=link_to('edit',edit_shop_admin_shop_path())%>
+  </div>
+</div>
+<div id="shop_content">
+  <div id="left_side">
+    <%=render :partial=>'shop_categories', :locals=>{:shop=>@shop}%>
+  </div>
+  <div id="right_side">
+    <%=render :partial=>'product', :collection=>@shop.products, :as=>:product%>
+    <%=link_to('new product',new_shop_admin_product_path())%>
+  </div>
+</div>

@@ -1,4 +1,4 @@
 <%form_for @product, :url=>shop_admin_product_path(@product) do |f|%>
-  <%=render :partial=>'product_form', :locals=>{:f=>f,:shop=>@shop}%>
+  <%=render :partial=>'product_form', :locals=>{:f=>f,:shop=>@shop,:product=>@product}%>
   <%=f.submit 'Edit'%>
 <%end%>

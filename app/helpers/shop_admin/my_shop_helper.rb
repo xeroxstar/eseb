@@ -1,0 +1,2 @@
+module ShopAdmin::MyShopHelper
+end

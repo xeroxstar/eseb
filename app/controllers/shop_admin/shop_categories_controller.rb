@@ -1,5 +1,4 @@
 class ShopAdmin::ShopCategoriesController < ShopAdmin::ApplicationController
-  before_filter :owner_of_shop
 
   def new
     @shop_category = @shop.shop_categories.new

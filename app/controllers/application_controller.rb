@@ -30,6 +30,6 @@ class ApplicationController < ActionController::Base
   end
 end
 
-class ShopAdmin::ApplicationController < ApplicationController
-
-end
+#class ShopAdmin::ApplicationController < ApplicationController
+#  before_filter :owner_of_shop
+#end

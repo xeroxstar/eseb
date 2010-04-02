@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     params[:user] ||= params[:shop_owner]
     @user.update_attributes!(params[:user])
     if !@user.is_a?(ShopOwner) && @user.full_personal_infos?
-      redirect_to new_shop_path
+      redirect_to new_shop_admin_shop_path
     else
       redirect_to :action=>:edit
     end

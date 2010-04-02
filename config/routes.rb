@@ -5,12 +5,11 @@ ActionController::Routing::Routes.draw do |map|
   map.signup '/signup', :controller => 'users', :action => 'new'
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil
   map.my_account '/my_account.:format' , :controller=>'users',:action=>'edit'
-  map.my_shop '/myshop',:controller=>'shops', :action=>'myshop'
+  map.my_shop '/myshop',:controller=>'shop_admin/my_shop', :action=>'index'
   map.resources :users,:except =>[:edit], :member=>{ :suspend=>:put,
     :unsuspend=>:put}
   map.resources :shop_owners, :controller=>'users'
-  map.resources :shops,:except=>[:destroy],
-    :collection=>{:deactive=>:put, :reactive=>:put}
+  map.resources :shops,:except=>[:destroy]
 
 
   map.resource :session, :only=>[:create,:destroy,:new]
@@ -19,6 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :shop_admin do |shop_owner|
     shop_owner.resources :products
     shop_owner.resources :shop_categories
+    shop_owner.resource :shop, :controller=>'my_shop', :member=>{:deactive=>:put, :reactive=>:put}
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

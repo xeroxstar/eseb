@@ -8,9 +8,9 @@ class ImagesController < ApplicationController
     if params[:Filedata]
       @image = Image.new(:attachment => params[:Filedata])
       if @image.save
-        render :partial => 'image', :object => @image
+        render :json=>{:image_url=>@image.attachment.url(:mini),:id=>@image.id}
       else
-        render :text => "error"
+        render :text => "error", :status=>500
       end
     else
       @image = Image.new params[:image]
