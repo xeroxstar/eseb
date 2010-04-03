@@ -19,6 +19,7 @@ Shop.blueprint do
   shortname {Sham.shortname}
   category {Category.make}
   owner {create_activated_shopowner}
+  status {Shop::ACTIVE}
 end
 
 User.blueprint do
