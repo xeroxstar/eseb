@@ -19,6 +19,9 @@ class Product < ActiveRecord::Base
     {:conditions=> {:shop_category_id=>shop_category_id}}
   }
   named_scope :avaiable, {:conditions=>{:deleted_at=>nil}}
+
+  #validation
+  validates_presence_of :name
   # return ids of product images
   def image_ids
     images.map(&:id).join(',')
@@ -36,7 +39,7 @@ class Product < ActiveRecord::Base
 
   protected
   def add_images
-    img_ids = @image_ids.split(',')
+    img_ids = (@image_ids||'').split(',')
     images = Image.with_ids(img_ids)
     transaction do
       for image in images do

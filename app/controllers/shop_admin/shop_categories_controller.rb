@@ -51,17 +51,4 @@ class ShopAdmin::ShopCategoriesController < ShopAdmin::ApplicationController
       format.xml  { head :ok }
     end
   end
-
-  protected
-  def owner_of_shop
-    if params[:shop_id]
-      @shop = Shop.find(params[:shop_id])
-    else
-      @shop = current_user.shop
-    end
-    if current_user != @shop.owner
-      flash[:notice] = "you don't have permission to access this page"
-      redirect_to '/'
-    end
-  end
 end

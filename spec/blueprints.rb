@@ -58,3 +58,17 @@ Category.blueprint do
   name {Sham.name}
   shortname {Sham.shortname}
 end
+
+ShopCategory.blueprint do
+  name {Sham.name}
+  subcategory {Category.make(:parent=>Category.make)}
+  shop {Shop.make}
+end
+
+Product.blueprint do
+  name {Sham.name}
+  description {Sham.desciption}
+  price { rand 10000}
+  quantity {rand 10}
+  subcategory {Category.make(:parent=>Category.make)}
+end

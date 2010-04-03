@@ -5,6 +5,11 @@ class ProductsController < ApplicationController
     @products = Product.avaiable
   end
 
+  def show
+    @product = Product.avaiable.find(params[:id])
+    render :layout=>false
+  end
+
   def new
     @product = current_user.products.new
   end

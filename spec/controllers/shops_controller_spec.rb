@@ -1,5 +1,5 @@
 require File.dirname(__FILE__) + '/../spec_helper'
-include AuthenticatedTestHelper
+#include AuthenticatedTestHelper
 include MockTestHelpers
 describe ShopsController do
   describe 'actions' do

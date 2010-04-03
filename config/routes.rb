@@ -13,7 +13,7 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.resource :session, :only=>[:create,:destroy,:new]
-  map.resources :categories
+#  map.resources :categories
   map.resources :products
   map.resources :images
   map.namespace :shop_admin do |shop_owner|

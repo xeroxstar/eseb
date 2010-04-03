@@ -157,6 +157,27 @@ describe 'routing' do
           params_from(:put,'/shop_admin/shop/reactive').should == {:controller=>'shop_admin/my_shop', :action=>'reactive'}
         end
       end
+
+      describe 'shop_categories' do
+        it "should route shop_categories's 'new' action correctly" do
+          {:get=>'/shop_admin/shop_categories/new'}.should route_to(:controller=>'shop_admin/shop_categories',:action=>'new')
+        end
+
+        it "should route shop_categories's 'edit' action correctly"  do
+          {:get=>'/shop_admin/shop_categories/1/edit'}.should route_to(:controller=>'shop_admin/shop_categories',:action=>'edit',:id=>'1')
+        end
+
+        it "should route shop_categories's 'create' action correctly" do
+          {:post=>'/shop_admin/shop_categories'}.should route_to(:controller=>'shop_admin/shop_categories',:action=>'create')
+        end
+
+        it "should route shop_categories's 'update' action correctly" do
+          {:put=>'/shop_admin/shop_categories/1'}.should route_to(:controller=>'shop_admin/shop_categories',:action=>'update',:id=>'1')
+        end
+        it "should not route to destroy action" do
+          {:delete=>'/shop_admin/shop_categories/1'}.should route_to(:controller=>'shop_admin/shop_categories',:action=>'destroy',:id=>'1')
+        end
+      end
     end
   end
 

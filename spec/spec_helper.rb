@@ -17,7 +17,7 @@ require File.join(File.dirname(__FILE__), 'blueprints')
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
 Dir[File.expand_path(File.join(File.dirname(__FILE__),'support','**','*.rb'))].each {|f| require f}
-
+include AuthenticatedTestHelper
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
   # lines, delete config/database.yml and disable :active_record
@@ -62,7 +62,6 @@ Spec::Runner.configure do |config|
 end
 Spec::Rails::Example::ControllerExampleGroup.send(:include,AuthenticatedSystem)
 Spec::Rails::Example::ControllerExampleGroup.send(:include,UtilHelper)
-
 def create_activated_shopowner(attrs={})
   attrs = {:country=>Country.make}.merge(attrs)
   shop_owner  = ShopOwner.make_unsaved(attrs)
