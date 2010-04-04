@@ -25,22 +25,20 @@ class User < ActiveRecord::Base
 
   validates_format_of       :last_name, :with=>NAME_REG , :allow_blank =>true
 
-  validates_length_of       :address, :minimum=>12, :allow_blank=>true
-
-
 
   # HACK HACK HACK -- how to do attr_accessible from here?
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.
   attr_accessible :login, :email, :name, :password, :password_confirmation,
-    :first_name, :last_name,:address, :social_id,:country_id,:city
+    :first_name, :last_name, :social_id
 
 
   # Asccociation
-  belongs_to :country
+  #  belongs_to :country
   has_many :products
-  #  has_one :shop
-
+  has_one :address, :as=>:addressable
+#  has_one :shop
+  #  accepts_nested_attributes_for :address
   class << self
     # This method is worked with the single-table inheritance model.
     # Create ShopOwner object when user record have enough infomation
@@ -77,8 +75,30 @@ class User < ActiveRecord::Base
   # Check user whether have enough personal infos or not to create a shop
   #   return true. When first_name, last_name, city, address, country is not nil
   def full_personal_infos?
-    return !(first_name.blank? || last_name.blank? || social_id.blank? || city.blank? || address.blank? || country_id.blank?)
+    return !(first_name.blank? || last_name.blank? || social_id.blank? || address.nil?)
   end
+
+  def address=(value)
+    return if value.nil?
+    if value.is_a?(Hash)
+      if address
+        self.address.update_attributes(value)
+      else
+        self.create_address(value)
+      end
+    else
+      raise ArgumentError, "The value must be a Hash"
+    end
+  end
+  def update_attributes(attributes)
+    addr = attributes.delete(:address)
+    if addr
+      self.address= addr
+    end
+    super(attributes)
+  end
+
+
 
   # Create shop
   def create_shop(attrs={})

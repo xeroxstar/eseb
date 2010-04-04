@@ -31,13 +31,6 @@ describe ShopOwner do
         end
       end
     end#END 'legitimate last and first name'
-
-    it 'lenght of address should more than 12 characters' do
-      @shop_owner.update_attributes(:address=>'exae12aaa')
-      @shop_owner.errors.on(:address).should_not be_nil
-      @shop_owner.update_attributes(:address=>'exae12aaaasd2q')
-      @shop_owner.errors.on(:address).should be_nil
-    end
   end # END 'validate attributes'
   describe 'specific methods' do
     it 'can not create more than 1 shop' do

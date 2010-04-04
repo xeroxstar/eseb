@@ -14,17 +14,17 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
+    @address = current_user.address || Address.new
   end
 
   def update
     @user = current_user
     params[:user] ||= params[:shop_owner]
-    @user.update_attributes!(params[:user])
-    if !@user.is_a?(ShopOwner) && @user.full_personal_infos?
-      redirect_to new_shop_admin_shop_path
-    else
-      redirect_to :action=>:edit
+    if @user.update_attributes(params[:user])
+      flash[:notice] = 'Update successfull'
     end
+    @address = current_user.address || Address.new
+    render :action=>:edit
   end
 
   def create

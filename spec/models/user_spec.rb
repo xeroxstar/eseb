@@ -10,11 +10,18 @@ describe User do
     @country = Country.make
     @shop_owner_infos = {:first_name=>"Doan",
       :last_name=>'Tran Quy',
-      :address=>'37 Hung Vuong, Long Khanh, Dong nai',
-      :social_id=>'B3271477',
-      :city=>'Ho Chi Minh',
-      :country=>@country
+      :social_id=>'B3271477'
     }
+  end
+  describe 'associations' do
+    before(:each) do
+      @user = create_activated_user
+    end
+    it 'should has one address' do
+      address = Address.make(:addressable=>@user)
+      @user.reload
+      @user.address.should ==address
+    end
   end
   describe 'being created' do
     before do
@@ -161,9 +168,25 @@ describe User do
   #
   describe 'Authentication' do
     before(:each) do
-      @user = User.make_unsaved(:login=>'quentin',:email=>'quentin@example.com')
-      @user.register!
-      @user.activate!
+      @user = create_activated_user(:login=>'quentin',:email=>'quentin@example.com')
+    end
+
+    it 'update address' do
+      address_data = valid_address
+      @user.update_attributes(:address=>address_data)
+      @user.address.should_not be_nil
+      @user.address.street.should ==address_data[:street]
+      @user.address.city.should == City.find(address_data[:city_id])
+      @user.update_attributes(:address=>address_data.merge(:street=>'37 Hung Vuong'))
+      @user.address.street.should =='37 Hung Vuong'
+    end
+
+    it 'set address' do
+      address_data = valid_address
+      address = Address.create(valid_address)
+      lambda{
+        @user.address= address
+      }.should raise_exception(ArgumentError)
     end
 
     it 'resets password' do
@@ -216,10 +239,12 @@ describe User do
 
   it 'have engouh information when it filled first_name, last_name, city, adrress and country' do
     @user = User.make(@shop_owner_infos)
+    Address.make(:addressable=>@user)
+    @user.reload
     @user.should be_full_personal_infos
   end
 
-  [:last_name,:first_name,:city,:address].each do |attr|
+  [:last_name,:first_name,:address].each do |attr|
     it "have not engouh informations when it missing #{attr}" do
       @user = User.make(attr=>nil)
       @user.should_not be_full_personal_infos
@@ -294,7 +319,7 @@ describe User do
   end
 
   describe "being unsuspended" do
-#    fixtures :users
+    #    fixtures :users
 
     before do
       @user = User.make(:activated_at=>2.days.ago)
@@ -354,7 +379,7 @@ describe User do
       @user.create_shop(@valid_shop).should be_nil
     end
 
-    ['city','first_name','last_name','address','social_id','city'].each do |attr|
+    ['first_name','last_name','social_id'].each do |attr|
       it "full_personal_infos? should return false if #{attr} nil or blank" do
         @shopowner.should be_full_personal_infos
         @shopowner.update_attribute(attr.to_sym,nil)

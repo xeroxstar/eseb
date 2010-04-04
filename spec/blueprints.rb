@@ -9,8 +9,9 @@ Sham.login {Faker::Internet.user_name}
 Sham.email {Faker::Internet.email}
 Sham.desciption {Faker::Lorem.paragraph(5)}
 Sham.title {Faker::Lorem.sentence(30)}
-Sham.city {Faker::Address.city}
 Sham.street {Faker::Address.street_address}
+Sham.city {Faker::Address.us_state}
+Sham.city_code {Faker::Address.us_state_abbr}
 Sham.country {Faker::Address.uk_country}
 Sham.country_code {Faker::Address.us_state_abbr}
 
@@ -43,15 +44,7 @@ ShopOwner.blueprint do
   first_name {Sham.name}
   last_name {Sham.name}
   social_id {'B3271477'}
-  address {Sham.street}
-  city {Sham.city}
   activation_code {'1234212321'}
-  country
-end
-
-Country.blueprint do
-  name {Sham.country}
-  code {Sham.country_code}
 end
 
 Category.blueprint do
@@ -78,4 +71,20 @@ Product.blueprint do
   price { rand 10000}
   quantity {rand 10}
   subcategory {Category.make(:parent=>Category.make)}
+end
+
+Country.blueprint do
+  name {Sham.country}
+  code {Sham.country_code}
+end
+
+City.blueprint do
+  name {Sham.city}
+  code {Sham.city_code}
+end
+
+Address.blueprint do
+  street {Sham.street}
+  state {Sham.name}
+  city {City.make}
 end

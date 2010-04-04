@@ -63,10 +63,11 @@ end
 Spec::Rails::Example::ControllerExampleGroup.send(:include,AuthenticatedSystem)
 Spec::Rails::Example::ControllerExampleGroup.send(:include,UtilHelper)
 def create_activated_shopowner(attrs={})
-  attrs = {:country=>Country.make}.merge(attrs)
+#  attrs = {:country=>Country.make}.merge(attrs)
   shop_owner  = ShopOwner.make_unsaved(attrs)
   shop_owner.register!
   shop_owner.activate!
+  Address.make(:addressable=>shop_owner)
   shop_owner
 end
 
@@ -86,4 +87,10 @@ end
 def valid_shop_category(attr={})
   subcategory = Category.make(:subcategory)
   return {:name=>Sham.name,:subcategory_id=>subcategory.id}.merge(attr)
+end
+
+def valid_address(attr={})
+  country = Country.make
+  city = City.make(:country_id=>country.id)
+  return {:street=>Sham.street,:state=>Sham.name,:city_id=>city.id}.merge(attr)
 end

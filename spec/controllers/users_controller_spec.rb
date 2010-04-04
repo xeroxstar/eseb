@@ -129,12 +129,11 @@ describe UsersController do
     before(:each) do
       @user = create_activated_user
       login_as(@user)
+      valid_address = valid_address(:street=>'37 Hung Vuong')
       @shop_owner_valid_infos = {:first_name=>"Doan",
         :last_name=>'Tran Quy',
-        :address=>'37 Hung Vuong, Long Khanh, Dong nai',
         :social_id=>'B3271477',
-        :city=>'Ho Chi Minh',
-        :country_id=>1
+        :address=>valid_address
       }
     end
 
@@ -190,12 +189,9 @@ describe UsersController do
 
       it 'should be redirect to create shop page when full_personal_infos' do
         put "update", :id=>@user.id, :user=>@shop_owner_valid_infos
-        response.should redirect_to :controller=>'shop_admin/my_shop',:action=>'new'
-      end
-
-      it 'shoudl be render users/edit when not enought info' do
-        put "update", :id=>@user.id, :user=>@shop_owner_valid_infos.merge(:address=>nil)
-        response.should redirect_to my_account_path
+        assigns[:user].address.should_not be_nil
+        assigns[:user].address.street.should =='37 Hung Vuong'
+        response.should render_template('users/edit.html')
       end
     end
   end
