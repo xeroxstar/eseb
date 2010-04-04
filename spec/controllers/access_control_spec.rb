@@ -1,7 +1,7 @@
 require File.dirname(__FILE__) + '/../spec_helper'
   # Be sure to include AuthenticatedTestHelper in spec/spec_helper.rb instead
 # Then, you can remove it from this and the units test.
-include AuthenticatedTestHelper
+#include AuthenticatedTestHelper
 
 #
 # A test controller with and without access controls
@@ -42,7 +42,7 @@ ACCESS_CONTROL_IS_LOGIN_REQD = [
   :login_is_required,]
 
 describe AccessControlTestController do
-  fixtures        :users
+#  fixtures        :users
   before do
     # is there a better way to do this?
     ActionController::Routing::Routes.add_route '/login_is_required',           :controller => 'access_control_test',   :action => 'login_is_required'

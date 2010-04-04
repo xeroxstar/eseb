@@ -76,3 +76,14 @@ def create_activated_user(attrs={})
   user.activate!
   user
 end
+
+def valid_shop(attr={})
+  return {:name=>Sham.name,:shortname=>Sham.shortname,:category_id=>1}.merge(attr)
+end
+def valid_product(attr={})
+  return {:name=>Sham.name}.merge(attr)
+end
+def valid_shop_category(attr={})
+  subcategory = Category.make(:subcategory)
+  return {:name=>Sham.name,:subcategory_id=>subcategory.id}.merge(attr)
+end

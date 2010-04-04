@@ -1,11 +1,21 @@
 module AuthenticatedTestHelper
   # Sets the current user in the session from the user fixtures.
   def login_as(user)
-    @request.session[:user_id] = user ? (user.is_a?(User) ? user.id : users(user).id) : nil
+    if user.is_a?(Symbol)
+      user = create_activated_user
+    elsif user.is_a?(Hash)
+      user = create_activated_user(user)
+    end
+    @request.session[:user_id] = user ? user : nil
   end
 
   def authorize_as(user)
-    @request.env["HTTP_AUTHORIZATION"] = user ? ActionController::HttpAuthentication::Basic.encode_credentials(users(user).login, 'monkey') : nil
+    if user.is_a?(Symbol)
+      user = create_activated_user
+    elsif user.is_a?(Hash)
+      user = create_activated_user(user)
+    end
+    @request.env["HTTP_AUTHORIZATION"] = user ? ActionController::HttpAuthentication::Basic.encode_credentials(user.login, 'password') : nil
   end
 
   # rspec

@@ -57,11 +57,18 @@ end
 Category.blueprint do
   name {Sham.name}
   shortname {Sham.shortname}
+  parent {nil}
+end
+
+Category.blueprint(:subcategory) do
+  name {Sham.name}
+  shortname {Sham.shortname}
+  parent {Category.make}
 end
 
 ShopCategory.blueprint do
   name {Sham.name}
-  subcategory {Category.make(:parent=>Category.make)}
+  subcategory {Category.make(:subcategory)}
   shop {Shop.make}
 end
 

@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
   end
 
   def owner?(shop)
-    return (id==shop.owner_id)
+    return (id==shop.user_id)
   end
 
   def shop; end
@@ -108,7 +108,5 @@ class User < ActiveRecord::Base
     self.deleted_at = nil
     self.activation_code = self.class.make_token
   end
-
-
 
 end

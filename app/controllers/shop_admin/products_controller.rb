@@ -21,7 +21,7 @@ class ShopAdmin::ProductsController < ShopAdmin::ApplicationController
     if @product.update_attributes(params[:product])
       redirect_to '/myshop'
     else
-      render :new
+      render :edit
     end
   end
 

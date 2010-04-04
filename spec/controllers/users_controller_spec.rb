@@ -61,12 +61,14 @@ describe UsersController do
 
 
   it 'activates user' do
-    User.authenticate('aaron', 'monkey').should be_nil
-    get :activate, :activation_code => users(:aaron).activation_code
+    user = User.make(:login=>'aaron',:activated_at=>nil)
+    user.register!
+    User.authenticate('aaron', 'password').should be_nil
+    get :activate, :activation_code => user.activation_code
     response.should redirect_to('/login')
     flash[:notice].should_not be_nil
-    flash[:error ].should     be_nil
-    User.authenticate('aaron', 'monkey').should == users(:aaron)
+    flash[:error ].should    be_nil
+    User.authenticate('aaron', 'password').should == user
   end
 
   it 'does not activate user without key' do
@@ -152,7 +154,7 @@ describe UsersController do
     end
 
     it 'should be able to suspend account' do
-      @user = users(:quentin)
+      @user = create_activated_user
       @user.should be_active
       login_as(@user)
       put :suspend, :id=>1
@@ -160,7 +162,7 @@ describe UsersController do
     end
 
     it 'should be able to unsuspend account' do
-      @user = users(:quentin)
+      @user = create_activated_user
       login_as(@user)
       controller.current_user.should_receive(:unsuspend!)
       put :unsuspend, :id=>@user.id

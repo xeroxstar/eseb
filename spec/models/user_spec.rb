@@ -341,10 +341,20 @@ describe User do
   end
   describe 'util methods' do
     before(:each) do
-      @user = User.make
-      @shopowner = User.make(@shop_owner_infos)
+      @user = create_activated_user
+      @shopowner = create_activated_shopowner
+      @valid_shop = valid_shop
     end
-    ['city','first_name','last_name','address','social_id','city','country_id'].each do |attr|
+    it 'should be able check whether owner a shop or not' do
+      shop = Shop.make(:owner=>@shopowner)
+      @shopowner.should be_owner(shop)
+    end
+
+    it 'user can not create a shop' do
+      @user.create_shop(@valid_shop).should be_nil
+    end
+
+    ['city','first_name','last_name','address','social_id','city'].each do |attr|
       it "full_personal_infos? should return false if #{attr} nil or blank" do
         @shopowner.should be_full_personal_infos
         @shopowner.update_attribute(attr.to_sym,nil)
@@ -355,20 +365,20 @@ describe User do
     it 'should be able to create a shop if full_personal_infos?' do
       @shopowner.should be_full_personal_infos
       lambda {
-        @shopowner.create_shop(:name=>'Rob Doan',:shortname=>'loveshop',:category_id=>1).should be_kind_of(Shop)
+        @shopowner.create_shop(@valid_shop).should be_kind_of(Shop)
       }.should change(Shop, :count).by(1)
     end
 
     it 'should not be able to create a shop unless full_personal_infos?' do
       @user.should_not be_full_personal_infos
       lambda {
-        @user.create_shop(:name=>'Rob Doan',:shortname=>'loveshop').should be_nil
+        @user.create_shop(@valid_shop).should be_nil
       }.should change(Shop, :count).by(0)
     end
 
     it 'should not be able to create a shop when already have shop' do
       lambda{
-        @shopowner.create_shop(:name=>'Rob Doan',:shortname=>'loveshop')
+        @shopowner.create_shop(@valid_shop.merge(:shortname=>nil))
       }.should_not change(Shop,:count)
     end
 

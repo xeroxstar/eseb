@@ -12,4 +12,5 @@ coverage
 coverage/*
 config/deploy.rb
 db/fixtures/*
+db/*.sqlite*
 public/assets/*

@@ -14,6 +14,25 @@ describe Shop do
     }
   end
 
+  describe 'collection' do
+    before(:each) do
+      @shop = Shop.make
+      3.times do
+        ShopCategory.make(:shop=>@shop)
+      end
+    end
+
+    it 'shopcategories' do
+      @shop.shopcategories_collection.should be_a(Array)
+      @shop.shopcategories_collection.size.should ==3
+    end
+    it 'subcategories' do
+      @shop.subcategories_collection.should be_a(Array)
+      @shop.shopcategories_collection.should_not be_blank
+    end
+
+  end
+
   it "should create a new instance given valid attributes" do
     lambda{
       Shop.create(@valid_attributes)
