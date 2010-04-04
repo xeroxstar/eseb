@@ -4,7 +4,7 @@ describe Shop do
   #  fixtures :users,:shops
 
   before(:each) do
-    @shop_owner = create_activated_shopowner
+    @shop_owner = create_activated_user
     @category = Category.make
     @valid_attributes = {
       :name =>"Quynh Khanh",
@@ -92,15 +92,22 @@ describe Shop do
       create_shop
     end
 
-    it 'should belong to a shopowner' do
-      @shop.owner.should be_a_kind_of(ShopOwner)
+#    it 'should belong to a shopowner' do
+#      @shop.owner.should be_a_kind_of(ShopOwner)
+#    end
+    it 'should has many addresses' do
+      lambda{
+        3.times{@shop.addresses.make}
+      }.should change(Address,:count).by_at_least(3)
+      @shop.addresses.should be_a(Array)
     end
 
-    it 'should have many products' do
-      @shop.products.should_not be_nil
+    it 'should has many products' do
+      3.times{@shop.products.make}
+      @shop.should have_at_least(3).products
       @shop.products.should be_kind_of(Array)
     end
-    it 'should have many shop_categories' do
+    it 'should has many shop_categories' do
       @shop.shop_categories.should_not be_nil
       @shop.shop_categories.should be_kind_of(Array)
     end

@@ -13,7 +13,8 @@ class Shop < ActiveRecord::Base
   belongs_to :subcategory, :conditions=>"parent_id is not null", :class_name=>'Category'
   has_many :shop_categories, :dependent=>:destroy
   has_many :subcategories , :through=>:shop_categories, :source => :subcategory
-  has_many :products
+  has_many :products, :dependent=>:destroy
+  has_many :addresses, :as=>:addressable, :dependent=>:destroy
   #  has_many :categories , :through=>:products
 
   #validation
