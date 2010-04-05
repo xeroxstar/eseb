@@ -2,7 +2,7 @@
 <%for address in @shop.addresses do%>
   <p><%="#{address.street},#{address.city.name}"%></p>
 <%end%>
-<p><%=link_to('Add address',address_shop_admin_shop_path())%></p>
+<p><%=fancy_link('Add address',address_shop_admin_shop_path())%></p>
 <div id="shop_nav" class="bg-shop">
   <div id="shop_back_links">
     Category: <%=link_to(@shop.category.name,@shop.category)%>
@@ -22,6 +22,6 @@
   </div>
   <div id="right_side">
     <%=render :partial=>'product', :collection=>@shop.products, :as=>:product%>
-    <%=link_to('new product',new_shop_admin_product_path())%>
+    <%=fancy_link('new product',new_shop_admin_product_path())%>
   </div>
 </div>

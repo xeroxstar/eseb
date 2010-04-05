@@ -1,4 +1,15 @@
-<%form_for @product do |f|%>
+<%=use_swfupload%>
+<script type="text/javascript">
+
+  $(document).ready(function() {
+    imageUploaderConfig("/images",{
+      postParams:{},
+      buttonImageUrl: '/images/FullyTransparent_65x29.png'
+    });
+    $.fancybox.resize();
+  })
+</script>
+<%form_remote_for @product do |f|%>
   <%=render :partial=>'product_form', :locals=>{:f=>f,:product=>@product}%>
   <%=f.submit 'Create'%>
 <%end%>

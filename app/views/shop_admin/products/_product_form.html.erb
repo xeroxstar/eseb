@@ -1,3 +1,14 @@
+<%=use_swfupload%>
+<script type="text/javascript">
+
+  $(document).ready(function() {
+    imageUploaderConfig("/images",{
+      postParams:{},
+      buttonImageUrl: '/images/FullyTransparent_65x29.png'
+    });
+    $.fancybox.resize();
+  })
+</script>
 <%content_for(:head) do %>
   <%=use_swfupload%>
 <%end %>
@@ -7,7 +18,7 @@
 </p>
 <p>
   <%=f.label :description%>
-  <%=f.text_area :description%>
+  <%=f.text_area :description, {:rows=>3}%>
 </p>
 <p>
   <%=f.label :price%>
@@ -17,14 +28,14 @@
   <%=f.label :quantity%>
   <%=f.text_field :quantity%>
 </p>
-<p>
-  <%=f.label :avaiable_date%>
-  <%=f.text_field :avaiable_date%>
-</p>
-<p>
-  <%=f.label :expired_date%>
-  <%=f.text_field :expired_date%>
-</p>
+<%#*<p>%>
+  <%#=f.label :avaiable_date%>
+  <%#=f.text_field :avaiable_date%>
+<%#*</p>%>
+<%#*<p>%>
+  <%#=f.label :expired_date%>
+  <%#=f.text_field :expired_date%>
+<%#*</p>%>
 <p>
   <%=f.label :category_id%>
   <%=f.select :category_id,shop.shopcategories_collection,{:include_blank=>"Select a category"}%>

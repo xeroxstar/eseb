@@ -1,4 +1,5 @@
 class ShopAdmin::ShopCategoriesController < ShopAdmin::ApplicationController
+  layout false , :only=>[:edit,:new]
   def new
     @shop_category = @shop.shop_categories.new
     respond_to do |format|
@@ -51,4 +52,5 @@ class ShopAdmin::ShopCategoriesController < ShopAdmin::ApplicationController
       format.xml  { head :ok }
     end
   end
+
 end

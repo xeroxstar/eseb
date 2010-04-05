@@ -107,6 +107,7 @@ function uploadSuccess(file, serverData) {
     progress.setComplete();
     progress.setStatus("Complete.");
     progress.toggleCancel(false);
+    $.fancybox.resize();
   } catch (ex) {
 //    this.debug(ex);
     console.debug(ex);

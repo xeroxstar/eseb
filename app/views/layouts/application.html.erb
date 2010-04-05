@@ -2,9 +2,16 @@
   <title>
     ShopViFy-Easy Sell Easy Buy.
   </title>
+  <%=javascript_include_tag 'jquery-1.4.2.min'%>
   <%=stylesheet_link_tag 'application','shop' %>
   <%=stylesheet_link_tag 'skin/default' %>
+  <%=use_fancybox%>
   <%=yield :head%>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      <%=yield :onload_js%>
+    })
+  </script>
 </head>
 <body>
   <div id="wrapper">
@@ -13,7 +20,7 @@
       <div class="clear"></div>
     </div>
     <div id="banner">
-     <%=yield :banner%>
+      <%=yield :banner%>
     </div>
     <div class="notice"><%=flash[:notice]%></div>
     <div id="main-content">

@@ -1,4 +1,5 @@
 class ShopAdmin::ProductsController < ShopAdmin::ApplicationController
+  layout :false, :only=>[:new,:edit]
   def new
     @product = @shop.products.new
   end
@@ -30,5 +31,4 @@ class ShopAdmin::ProductsController < ShopAdmin::ApplicationController
     @product.destroy
     redirect_to '/myshop'
   end
-
 end
