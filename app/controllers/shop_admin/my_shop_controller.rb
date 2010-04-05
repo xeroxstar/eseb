@@ -14,9 +14,23 @@ class ShopAdmin::MyShopController < ShopAdmin::ApplicationController
   def create
     @shop= current_user.create_shop(params[:shop])
     if @shop.errors.empty?
-      redirect_to(my_shop_path)
+      redirect_to :action=>:address
     else
       render :action=>'new'
+    end
+  end
+
+  def address
+    @address = @shop.addresses.new
+  end
+
+  def add_address
+    @address = @shop.addresses.new(params[:address])
+    if @address.save!
+      @shop.do_activate
+      redirect_to my_shop_path
+    else
+      render :address
     end
   end
 

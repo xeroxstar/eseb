@@ -4,7 +4,6 @@
 class ShopOwner < User
   default_scope :joins=>[:shop]
   validates_presence_of :first_name,:last_name,:social_id
-  has_one :shop, :foreign_key => 'user_id'
 
   #
   #  def create_shop(attrs={})

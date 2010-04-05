@@ -1,11 +1,11 @@
 class Shop < ActiveRecord::Base
   ACTIVE = 1
   DEACTIVE = 2
+  PENDING = 0
   SHORTNAME_FORMAT = /^[a-zA-Z0-9\-]{3,}$/i
 
   # plugins
   strip_attributes!
-
   #call back
   before_update :unchange_shortname
   belongs_to :owner, :class_name=>'User', :foreign_key=>'user_id'
@@ -48,6 +48,16 @@ class Shop < ActiveRecord::Base
 
   def active?
     self.status == ACTIVE
+  end
+
+  def pending?
+    self.status == PENDING
+  end
+
+  def do_activate
+    if pending?
+      activate
+    end
   end
 
   def activate

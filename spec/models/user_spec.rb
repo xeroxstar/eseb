@@ -375,10 +375,6 @@ describe User do
       @shopowner.should be_owner(shop)
     end
 
-    it 'user can not create a shop' do
-      @user.create_shop(@valid_shop).should be_nil
-    end
-
     ['first_name','last_name','social_id'].each do |attr|
       it "full_personal_infos? should return false if #{attr} nil or blank" do
         @shopowner.should be_full_personal_infos
@@ -394,10 +390,10 @@ describe User do
       }.should change(Shop, :count).by(1)
     end
 
-    it 'should not be able to create a shop unless full_personal_infos?' do
-      @user.should_not be_full_personal_infos
+    it 'should not be able to create a shop if he already has a shop' do
+      Shop.make(:owner=>@user)
       lambda {
-        @user.create_shop(@valid_shop).should be_nil
+        @user.create_shop(@valid_shop)
       }.should change(Shop, :count).by(0)
     end
 

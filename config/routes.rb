@@ -13,13 +13,13 @@ ActionController::Routing::Routes.draw do |map|
 
 
   map.resource :session, :only=>[:create,:destroy,:new]
-#  map.resources :categories
+  map.resources :categories
   map.resources :products
   map.resources :images
   map.namespace :shop_admin do |shop_owner|
     shop_owner.resources :products
     shop_owner.resources :shop_categories
-    shop_owner.resource :shop, :controller=>'my_shop', :member=>{:deactive=>:put, :reactive=>:put}
+    shop_owner.resource :shop, :controller=>'my_shop', :member=>{:deactive=>:put, :reactive=>:put,:address=>:get,:add_address=>:post}
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,8 +1,6 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Shop do
-  #  fixtures :users,:shops
-
   before(:each) do
     @shop_owner = create_activated_user
     @category = Category.make
@@ -30,7 +28,6 @@ describe Shop do
       @shop.subcategories_collection.should be_a(Array)
       @shop.shopcategories_collection.should_not be_blank
     end
-
   end
 
   it "should create a new instance given valid attributes" do

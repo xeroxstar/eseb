@@ -18,11 +18,27 @@ describe ShopAdmin::MyShopController do
       response.should redirect_to('/myshop')
     end
 
-    it 'create should redirect to myshop' do
+    it 'create should redirect to add address' do
       lambda {
         post :create, :shop=>@valid_shop
-        response.should redirect_to('/myshop')
+        assigns[:shop].should_not be_nil
+        response.should redirect_to(:action=>:address)
       }.should change(Shop,:count).by(1)
+    end
+
+    it 'address action' do
+      Shop.make(:owner=>@shop_owner)
+      get :address
+      assigns[:address].should_not be_nil
+      response.should render_template('shop_admin/my_shop/address.html.erb')
+    end
+
+    it 'add address' do
+      Shop.make(:owner=>@shop_owner)
+      addr = valid_address
+      post :add_address, :address=>addr
+      assigns[:shop].should_not be_pending
+      response.should redirect_to my_shop_path
     end
 
     it 'create should render template new if creating is unsuccess' do

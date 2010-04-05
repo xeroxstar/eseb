@@ -1,4 +1,3 @@
 <%=render :partial=>'informations_form', :locals=>{:user=>@user,:address=>@address}%>
-<%if current_user.full_personal_infos?%>
-  <%=button_to "Create Shop", new_shop_admin_shop_path,:method=>'get'%>
-<%end%>
+
+<%=button_to "Create Shop", new_shop_admin_shop_path,:method=>'get'%>

@@ -1,4 +1,8 @@
 <h1><%=@shop.name%></h1>
+<%for address in @shop.addresses do%>
+  <p><%="#{address.street},#{address.city.name}"%></p>
+<%end%>
+<p><%=link_to('Add address',address_shop_admin_shop_path())%></p>
 <div id="shop_nav" class="bg-shop">
   <div id="shop_back_links">
     Category: <%=link_to(@shop.category.name,@shop.category)%>

@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   #  belongs_to :country
   has_many :products
   has_one :address, :as=>:addressable
-#  has_one :shop
+  has_one :shop, :foreign_key => 'user_id'
   #  accepts_nested_attributes_for :address
   class << self
     # This method is worked with the single-table inheritance model.
@@ -102,13 +102,11 @@ class User < ActiveRecord::Base
 
   # Create shop
   def create_shop(attrs={})
-    if full_personal_infos?
-      shop_attrs = attrs.merge(:user_id=>id)
-      shop = Shop.new(shop_attrs)
-      shop.save
-      self.reload
-      shop
-    end
+    shop_attrs = attrs.merge(:user_id=>id)
+    shop = Shop.new(shop_attrs)
+    shop.status = Shop::PENDING
+    shop.save
+    shop
   end
 
   def owner?(shop)
