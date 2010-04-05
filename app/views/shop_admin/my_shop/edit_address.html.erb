@@ -1,4 +1,4 @@
-<%form_for @address,:url=>add_address_shop_admin_shop_path do |address|%>
+<%form_for @address,:url=>update_address_shop_admin_shop_path(:id=>@address.id) do |address|%>
   <%=render :partial=>'address_form', :locals=>{:address=>address}%>
   <%=address.submit%>
 <%end%>

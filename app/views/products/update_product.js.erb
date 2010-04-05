@@ -1,2 +1,2 @@
-$('#products').append('<%=escape_javascript(render(:partial=>'shared/product/product', :object=>@product))%>')
-$.fancybox.close()
+$('#fancybox-inner').html('<%=escape_javascript(render(:partial=>'shared/product/product', :object=>@product))%>');
+

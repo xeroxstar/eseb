@@ -1,0 +1,3 @@
+<p>Address: <%=address.text_field :street%></p>
+<p>City: <%=address.select :city_id,City.all.collect{|c| [c.name,c.id]},{:include_blank=>'Select a city' }%></p>
+<p>Country: <%=address.select :country_id,Country.all.collect{|c| [c.name,c.id]},{:include_blank=>'Select a country' }%></p>

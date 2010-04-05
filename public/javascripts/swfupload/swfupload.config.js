@@ -18,6 +18,7 @@ function imageUploaderConfig(uploadUrl,options){
       cancelButtonId : "btnCancel",
       imageContainer : "imageThumbs",
       imageHiddenField: "product_image_ids"
+
     },
     debug: false,
 

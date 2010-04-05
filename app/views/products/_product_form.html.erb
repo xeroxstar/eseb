@@ -6,6 +6,10 @@
   <%=f.text_field :name%>
 </p>
 <p>
+  <%=f.check_box :add_to_shop,{}, 1,0%>
+  <%=f.label :add_to_shop, 'Add this add to Shop?'%>
+</p>
+<p>
   <%=f.label :description%>
   <%=f.text_area :description,{:rows=>3}%>
 </p>

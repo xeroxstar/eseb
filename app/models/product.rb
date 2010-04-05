@@ -7,12 +7,15 @@
 class Product < ActiveRecord::Base
   strip_attributes!
   after_save :add_images
+  before_create :shop_user_syn
   # Asscociations
   belongs_to :subcategory, :foreign_key => 'category_id', :class_name=>'Category'
   belongs_to :shop_category
   belongs_to :shop
+  belongs_to :user
   has_many :images, :as=>:viewable,:dependent => :destroy
   attr_writer :image_ids
+  attr_accessor :add_to_shop
 
   #named scope
   named_scope :in_shop_category , lambda{ |shop_category_id|
@@ -27,6 +30,10 @@ class Product < ActiveRecord::Base
     images.map(&:id).join(',')
   end
 
+  def add_to_shop=(value)
+    @add_to_shop = (1==value.to_i)
+  end
+
   # return image cover url
   def cover_image_url(style=:small)
     image = images.first
@@ -38,6 +45,12 @@ class Product < ActiveRecord::Base
   end
 
   protected
+  # Set shop depent on user
+  def shop_user_syn
+    if @add_to_shop
+      self.shop = self.user.shop
+    end
+  end
   def add_images
     img_ids = (@image_ids||'').split(',')
     images = Image.with_ids(img_ids)

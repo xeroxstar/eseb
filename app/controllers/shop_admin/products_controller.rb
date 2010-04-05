@@ -1,15 +1,19 @@
 class ShopAdmin::ProductsController < ShopAdmin::ApplicationController
-  layout :false, :only=>[:new,:edit]
+  layout false, :only=>[:new,:edit]
   def new
-    @product = @shop.products.new
+    @product = current_user.products.new
   end
 
   def edit
-    @product = @shop.products.find(params[:id])
+    @product = current_user.products.find(params[:id])
+  end
+
+  def show
   end
 
   def create
-    @product = @shop.products.new(params[:product])
+    @product = current_user.products.new(params[:product])
+    @product.add_to_shop=1
     if @product.save
       redirect_to '/myshop'
     else
@@ -18,8 +22,8 @@ class ShopAdmin::ProductsController < ShopAdmin::ApplicationController
   end
 
   def update
-    @product = @shop.products.find(params[:id])
-    if @product.update_attributes(params[:product])
+    @product = current_user.products.find(params[:id])
+    if @product.update_attributes(params[:product].merge(:add_to_shop=>1))
       redirect_to '/myshop'
     else
       render :edit
@@ -27,7 +31,7 @@ class ShopAdmin::ProductsController < ShopAdmin::ApplicationController
   end
 
   def destroy
-    @product = @shop.products.find(params[:id])
+    @product = current_user.products.find(params[:id])
     @product.destroy
     redirect_to '/myshop'
   end

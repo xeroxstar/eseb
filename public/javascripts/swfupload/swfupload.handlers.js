@@ -102,7 +102,8 @@ function uploadProgress(file, bytesLoaded, bytesTotal) {
 
 function uploadSuccess(file, serverData) {
   try {
-    _setProductImages(serverData,this.customSettings.imageContainer,this.customSettings.imageHiddenField)
+    _setProductImages(serverData,this.customSettings.imageContainer,
+                                 this.customSettings.imageHiddenField)
     var progress = new FileProgress(file, this.customSettings.progressTarget);
     progress.setComplete();
     progress.setStatus("Complete.");

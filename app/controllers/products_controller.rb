@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_filter :login_required, :except =>[:index,:show]
-  layout :false, :only=>[:new]
+  layout false, :only=>[:new]
   def index
     @products = Product.avaiable
   end
