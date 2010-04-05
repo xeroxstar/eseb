@@ -1,8 +1,5 @@
 class ShopAdmin::MyShopController < ShopAdmin::ApplicationController
   skip_before_filter :owner_of_shop, :only=>[:new,:create]
-  def index
-  end
-
   def new
     if current_user.shop
       redirect_to '/myshop'
@@ -10,7 +7,8 @@ class ShopAdmin::MyShopController < ShopAdmin::ApplicationController
       @shop = Shop.new
     end
   end
-
+  def index
+  end
   def create
     @shop= current_user.create_shop(params[:shop])
     if @shop.errors.empty?

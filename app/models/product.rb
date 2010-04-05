@@ -28,12 +28,12 @@ class Product < ActiveRecord::Base
   end
 
   # return image cover url
-  def cover_image_url
+  def cover_image_url(style=:small)
     image = images.first
     if image
-      image.attachment.url(:small)
+      image.attachment.url(style)
     else
-      '/images/missing.png'
+      "/images/product_missing_#{style}.png"
     end
   end
 

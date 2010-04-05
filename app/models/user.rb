@@ -42,12 +42,12 @@ class User < ActiveRecord::Base
   class << self
     # This method is worked with the single-table inheritance model.
     # Create ShopOwner object when user record have enough infomation
-    def instantiate(record)
-      if Shop.exists?(:user_id=>record['id'])
-        record[inheritance_column] = 'ShopOwner'
-      end
-      super(record)
-    end
+#    def instantiate(record)
+#      if Shop.exists?(:user_id=>record['id'])
+#        record[inheritance_column] = 'ShopOwner'
+#      end
+#      super(record)
+#    end
   end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
@@ -112,8 +112,6 @@ class User < ActiveRecord::Base
   def owner?(shop)
     return (id==shop.user_id)
   end
-
-  def shop; end
 
   protected
 
