@@ -44,6 +44,10 @@ class Product < ActiveRecord::Base
     end
   end
 
+  def to_liquid(options={})
+    ProductDrop.new self, options
+  end
+
   protected
   # Set shop depent on user
   def shop_user_syn

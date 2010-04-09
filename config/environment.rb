@@ -13,6 +13,7 @@ Rails::Initializer.run do |config|
 
   # Add additional load paths for your own custom dirs
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
+   config.load_paths += %W(#{RAILS_ROOT}/app/drops)
 #  config.load_paths += %W( #{RAILS_ROOT}/app/middleware )
   # Specify gems that this application depends on and have them installed with rake gems:install
   # config.gem "bj"
@@ -23,6 +24,7 @@ Rails::Initializer.run do |config|
   config.gem 'aasm'
   config.gem 'saturnflyer-acts_as_tree', :lib=>'acts_as_tree'
   config.gem 'faker'
+  config.gem 'liquid', :version => '>= 1.9.0'
 #  config.gem 'mime-types', :lib => "mime/types"
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

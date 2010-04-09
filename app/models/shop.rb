@@ -15,6 +15,7 @@ class Shop < ActiveRecord::Base
   has_many :subcategories , :through=>:shop_categories, :source => :subcategory
   has_many :products, :dependent=>:destroy
   has_many :addresses, :as=>:addressable, :dependent=>:destroy
+  #  belongs_to :shop_layout
   #  has_many :categories , :through=>:products
 
   #validation
@@ -66,6 +67,29 @@ class Shop < ActiveRecord::Base
 
   def deactivate
     update_attribute(:status,DEACTIVE)
+  end
+
+  def to_liquid(options={})
+    ShopDrop.new self, options
+  end
+
+  def call_render(template_type, assigns = {}, controller = nil, options = {})
+    assigns.update('shop' => to_liquid)
+    options.reverse_merge!(:layout => true)
+    template = File.new("#{template_path}/#{template_type}.liquid", "r")
+    if options[:layout]
+      WeeShop::Liquid::LiquidTemplate.new(self).render(layout, template, assigns, controller)
+    else
+      WeeShop::Liquid::LiquidTemplate.new(self).parse_inner_template(template, assigns, controller)
+    end
+  end
+
+  def template_path
+    RAILS_ROOT+'/app/themes/1/code1'
+  end
+
+  def layout
+    File.new(RAILS_ROOT+'/app/themes/1/code1/layout.liquid','r')
   end
 
   protected
