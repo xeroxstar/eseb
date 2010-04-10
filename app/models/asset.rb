@@ -6,4 +6,8 @@ class Asset < ActiveRecord::Base
       :conditions=>{:id=>ids}
     }
   }
+
+  def to_liquid(options={})
+    AssetDrop.new self,options
+  end
 end

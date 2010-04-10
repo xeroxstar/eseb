@@ -1,4 +1,9 @@
 {% for product in products %}
-  {{ product.product_cover_image_url }}
   <h3>{{product.name}}</h3>
+  <image src={{ product.small_cover_image_url }}/>
+  <div id='images'>
+  {% for image in product.images %}
+    <image src={{ image.mini_image_url }}/>
+  {%endfor%}
+  </div>
 {%endfor%}
