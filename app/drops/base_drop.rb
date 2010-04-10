@@ -9,9 +9,12 @@ class BaseDrop < Liquid::Drop
     @liquid = liquid_attributes.inject({}) { |h, k| h.update k.to_s => @source.send(k) }
   end
 
-
   def before_method(method)
     @liquid[method.to_s]
+  end
+
+  def missing_method
+
   end
 
   def eql?(comparison_object)
@@ -20,6 +23,10 @@ class BaseDrop < Liquid::Drop
 
   def ==(comparison_object)
     self.source == (comparison_object.is_a?(self.class) ? comparison_object.source : comparison_object)
+  end
+
+  def id
+    @source.id
   end
 
   # converts an array of records to an array of liquid drops, and assigns the given context to each of them

@@ -40,7 +40,7 @@ class Product < ActiveRecord::Base
     if image
       image.attachment.url(style)
     else
-      "/images/product_missing_#{style}.png"
+      return nil
     end
   end
 

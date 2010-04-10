@@ -1,12 +1,15 @@
-# To change this template, choose Tools | Templates
-# and open the template in the editor.
-
 class ShopDrop < BaseDrop
+  liquid_attributes << :name << :shortname
   def initialize(source,options={})
     super source
+    @options = options
   end
 
   def products
-    @products ||= liquify(*@source.products)
+    @products || liquify(*@source.products)
+  end
+
+  def shop_categories
+    @shop_categories || liquify(*@source.shop_categories)
   end
 end

@@ -7,7 +7,7 @@
   </div>
   <div id="shop_right">
     <div id="products">
-      <%=@shop.call_render('shop',{'products'=>@products},nil,{:layout=>false})%>
+      <%=@shop.call_render('shop',{'products'=>@products},controller,{:layout=>false})%>
       <%#=render :partial=>'product', :collection=>@products%>
     </div>
   </div>
