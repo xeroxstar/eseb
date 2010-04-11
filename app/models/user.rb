@@ -98,8 +98,6 @@ class User < ActiveRecord::Base
     super(attributes)
   end
 
-
-
   # Create shop
   def create_shop(attrs={})
     shop_attrs = attrs.merge(:user_id=>id)

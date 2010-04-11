@@ -22,9 +22,10 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem 'will_paginate', :lib=>'will_paginate', :version => '2.3.12'
   config.gem 'aasm'
-  config.gem 'saturnflyer-acts_as_tree', :lib=>'acts_as_tree'
+  config.gem 'saturnflyer-acts_as_tree', :lib=>'acts_as_tree',:source => "http://gems.github.com"
   config.gem 'faker'
   config.gem 'liquid', :version => '>= 1.9.0'
+  config.gem 'rubyzip', :version => '>= 0.9.1', :lib => 'zip/zipfilesystem'
 #  config.gem 'mime-types', :lib => "mime/types"
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

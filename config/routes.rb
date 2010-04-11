@@ -6,11 +6,12 @@ ActionController::Routing::Routes.draw do |map|
   map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil
   map.my_account '/my_account.:format' , :controller=>'users',:action=>'edit'
   map.my_shop '/myshop',:controller=>'shop_admin/my_shop', :action=>'show'
+  map.mydesigns '/mydesigns',:controller=>'shop_admin/themes', :action=>'index'
   map.resources :users,:except =>[:edit], :member=>{ :suspend=>:put,
     :unsuspend=>:put}
-  map.resources :shop_owners, :controller=>'users'
+  #  map.resources :shop_owners, :controller=>'users'
   map.resources :shops,:except=>[:destroy]
-
+  map.resources :themes, :only=>[:index], :member=>{:preview_for=>:get}
 
   map.resource :session, :only=>[:create,:destroy,:new]
   map.resources :categories
@@ -19,10 +20,16 @@ ActionController::Routing::Routes.draw do |map|
   map.namespace :shop_admin do |shop_owner|
     shop_owner.resources :products
     shop_owner.resources :shop_categories
+#    shop_owner.resource :design , :controller=>'design'
+    shop_owner.resource :templates #, :id=>
+#    shop_owner.edit_theme 'templates/:theme/:'
+#    shop_owner.connect 'templates/:filename/:action', :controller=>'templates'
+#    shop_owner.connect 'design', :controller=>'templates', :action=>'index'
+    shop_owner.resources :themes, :collection=>{:import=>:post}, :member=>{:preview_for=>:any}
     shop_owner.resource :shop, :controller=>'my_shop',
-                        :member=>{:deactive=>:put,:reactive=>:put,
-                                  :update_address=>:put,:edit_address=>:get,
-                                  :address=>:get, :add_address=>:post,:remove_address=>:delete}
+      :member=>{:deactive=>:put,:reactive=>:put, :edit_layout=>:get,
+      :update_address=>:put,:edit_address=>:get,
+      :address=>:get, :add_address=>:post,:remove_address=>:delete}
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

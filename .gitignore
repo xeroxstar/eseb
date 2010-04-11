@@ -14,3 +14,5 @@ config/deploy.rb
 db/fixtures/*
 db/*.sqlite*
 public/assets/*
+themes/development/*
+tmp/**/*
