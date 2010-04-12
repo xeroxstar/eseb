@@ -3,6 +3,11 @@ module UrlFilters
   include Mephisto::Liquid::UrlMethods
   include ActionView::Helpers::TagHelper
   include ActionView::Helpers::AssetTagHelper
+  include ApplicationHelper
+
+  def pop_up_view_product(product)
+    content_tag :a, 'view', { :href => "/products/#{product['id']}", :title => product['name'] , :class=>'fancy-links'}
+  end
 
   def link_to_article(article, *args)
     options = link_args_to_options(args)

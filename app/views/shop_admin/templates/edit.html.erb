@@ -1,0 +1,21 @@
+<div style="float: left;width: 65%;">
+  <div id="template-container">
+    <%form_remote_tag(:url =>shop_admin_templates_path(:theme=>@theme,:filename=>@tmpl.basename.to_s),:method=>:put, :html => { :id => 'template-form' }) do%>
+      <%= render :partial => 'form', :locals => {
+        :attachment => @tmpl,
+        :title      => @tmpl.basename.to_s,
+        :hint       => 'You can use HTML and Liquid in your template.',
+        :labels     => { :data     => %(Edit the source code for your <em class="highlight">#{@tmpl.basename}</em> template),
+          :filename => 'Title of your template' }
+      } %>
+      <p class="btns">
+        <%= submit_tag "Update #{@tmpl.basename}" %> or
+        <%= link_to "cancel", shop_admin_templates_path(:theme=>@theme) %>
+      </p>
+    <%end%>
+  </div>
+</div>
+<div style="float: left;width: 35%;">
+  <%= render :partial => 'sidebar' %>
+</div>
+<div class="clear"></div>

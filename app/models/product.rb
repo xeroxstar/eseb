@@ -40,7 +40,7 @@ class Product < ActiveRecord::Base
     if image
       image.attachment.url(style)
     else
-      return nil
+      return false
     end
   end
 

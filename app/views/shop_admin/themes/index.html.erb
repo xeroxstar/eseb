@@ -1,0 +1,6 @@
+<%= link_to "Import new theme", new_shop_admin_theme_path() %>
+<div id="themes">
+  <ul id="themelist">
+    <%= render :partial => "theme", :collection => shop.themes %>
+  </ul>
+</div>

@@ -1,4 +1,4 @@
 <p>
-<%=image_tag(product.cover_image_url)%>
-<%=product.name%>
+  <%=image_tag(product.cover_image_url) if product.cover_image_url%>
+  <%=product.name%>
 </p>

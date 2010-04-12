@@ -38,7 +38,7 @@
 <%#*</p>%>
 <p>
   <%=f.label :category_id%>
-  <%=f.select :category_id,shop.shopcategories_collection,{:include_blank=>"Select a category"}%>
+  <%=f.select :category_id,shop.subcategories_collection,{:include_blank=>"Select a category"}%>
 </p>
 <p>
   <%=f.label :shop_category_id%>

@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     @shop = current_user.shop
     unless @shop
       flash[:warning] = "You don't have shop"
-      redirect_to '/'
+      redirect_to new_shop_admin_shop_path
     end
   end
 end

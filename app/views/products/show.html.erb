@@ -1,2 +1,2 @@
-<p><%=image_tag(@product.cover_image_url(:product))%></p>
+<p><%=image_tag(@product.cover_image_url(:product)) if @product.cover_image_url(:product)%></p>
 <%=@product.name%>

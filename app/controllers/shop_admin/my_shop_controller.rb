@@ -2,7 +2,9 @@ class ShopAdmin::MyShopController < ShopAdmin::ApplicationController
   skip_before_filter :owner_of_shop, :only=>[:new,:create]
 #  layout false , :only=>[:address, :edit_address]
 
-  def show; end
+  def show
+  end
+
   def new
     if current_user.shop
       redirect_to '/myshop'

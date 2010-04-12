@@ -1,0 +1,11 @@
+<li id="theme-<%= theme_counter %>">
+  <h3>
+    <span title="stored in /<%=h theme.name %>"><%=h theme.title %></span>
+    <span class="thememeta">
+      <% unless theme.version.blank? -%>v<%=h theme.version %> |<% end -%>
+      by <%= theme.author %>
+    </span>
+    <span><%=link_to('edit',shop_admin_templates_path(:theme=>theme))%></span>
+  </h3>
+  <img src="<%= url_for(:controller => '/shop_admin/themes', :action => 'preview_for', :id => theme) %>" alt="Theme preview" title="<%=h theme.title %> (v<%=h theme.version %>)" />
+</li>
