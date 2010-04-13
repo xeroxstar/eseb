@@ -1,0 +1,15 @@
+<%= fb_prompt_permission :email, "Can we email you from time to time?" %>
+<fb:prompt-permission perms="read_stream,publish_stream">
+Grant permission for status updates
+</fb:prompt-permission>
+<fb:add-section-button section="profile" />
+<fb:profile-pic uid="<%=facebook_session.user%>" />
+<fb:fbml>
+<% for f in @user.friend_ids %>
+  <%=f%>
+<% end %>
+<%= link_to "Send another invitation" ,'/' %>
+</fb:fbml>
+
+<%=debug(@facebook_params)%>
+<%=debug(request)%>

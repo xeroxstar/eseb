@@ -68,23 +68,40 @@ class UsersController < ApplicationController
     redirect_to users_path
   end
 
-#  def destroy
-#    @user.delete!
-#    redirect_to users_path
-#  end
+  #  def destroy
+  #    @user.delete!
+  #    redirect_to users_path
+  #  end
 
-# only admin can do this action
-#  def purge
-#    @user.destroy
-#    redirect_to users_path
-#  end
+  # only admin can do this action
+  #  def purge
+  #    @user.destroy
+  #    redirect_to users_path
+  #  end
 
   # There's no page here to update or destroy a user.  If you add those, be
   # smart -- make sure you check that the visitor is authorized to do so, that they
   # supply their old password along with a new one to update it, etc.
+  def link_user_accounts
+    user = User.find_by_fb_user(facebook_session.user)
+    if user.nil? && current_user.nil?
+      #register with fb
+      User.create_from_fb_connect(facebook_session.user)
+      user = User.find_by_fb_user(facebook_session.user)
+      redirect_to edit_user_path(user)
+      return
+    end
+    if user && current_user.nil?
+      self.current_user = user
+    elsif user && !current_user.nil?
+      current_user.link_fb_connect(facebook_session.user.id) unless current_user.fb_id == facebook_session.user.id
+    end
+    redirect_to my_shop_path
+  end
 
   protected
   def find_user
     @user = User.find(params[:id])
   end
+
 end

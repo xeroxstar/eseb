@@ -7,8 +7,9 @@ ActionController::Routing::Routes.draw do |map|
   map.my_account '/my_account.:format' , :controller=>'users',:action=>'edit'
   map.my_shop '/myshop',:controller=>'shop_admin/my_shop', :action=>'show'
   map.mydesigns '/mydesigns',:controller=>'shop_admin/themes', :action=>'index'
-  map.resources :users,:except =>[:edit], :member=>{ :suspend=>:put,
-    :unsuspend=>:put}
+  map.resources :users,:except =>[:edit], 
+                       :collection=>{:link_user_accounts=>:get},
+                       :member=>{ :suspend=>:put,:unsuspend=>:put}
   #  map.resources :shop_owners, :controller=>'users'
   map.resources :shops,:except=>[:destroy]
   map.resources :themes, :only=>[:index], :member=>{:preview_for=>:get}
