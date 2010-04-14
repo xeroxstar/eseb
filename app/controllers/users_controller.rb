@@ -30,9 +30,18 @@ class UsersController < ApplicationController
   def create
     logout_keeping_session!
     @user = User.new(params[:user])
-    @user.register! if @user && @user.valid?
+    if facebook_session
+      @user.fb_id = facebook_session.user.uid.to_i
+      @user.connect_fb!
+    else
+      @user.register! if @user && @user.valid?
+    end
     success = @user && @user.valid?
     if success && @user.errors.empty?
+      if @user.active?
+        redirect_to(my_account_path)
+        return
+      end
       flash[:notice] = "Thanks for signing up!  We're sending you an email with your activation code."
       redirect_back_or_default('/')
     else
@@ -83,20 +92,13 @@ class UsersController < ApplicationController
   # smart -- make sure you check that the visitor is authorized to do so, that they
   # supply their old password along with a new one to update it, etc.
   def link_user_accounts
-    user = User.find_by_fb_user(facebook_session.user)
-    if user.nil? && current_user.nil?
-      #register with fb
-      User.create_from_fb_connect(facebook_session.user)
-      user = User.find_by_fb_user(facebook_session.user)
-      redirect_to edit_user_path(user)
-      return
+    if current_user
+      current_user.activate! if current_user.pending?
+      self.current_user.link_fb_connect(facebook_session.user.id) unless self.current_user.fb_id == facebook_session.user.id
+      redirect_back_or_default(my_account_path)
+    else
+      redirect_to(new_user_path)
     end
-    if user && current_user.nil?
-      self.current_user = user
-    elsif user && !current_user.nil?
-      current_user.link_fb_connect(facebook_session.user.id) unless current_user.fb_id == facebook_session.user.id
-    end
-    redirect_to my_shop_path
   end
 
   protected

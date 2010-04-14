@@ -131,6 +131,7 @@ class User < ActiveRecord::Base
     new_facebooker.register_user_to_fb
   end
 
+
   #We are going to connect this user object with a facebook id. But only ever one account.
   def link_fb_connect(fb_id)
     unless fb_id.nil?
@@ -153,10 +154,12 @@ class User < ActiveRecord::Base
   #We need this so Facebook can find friends on our local application even if they have not connect through connect
   #We hen use the email hash in the database to later identify a user from Facebook with a local user
   def register_user_to_fb
-    users = {:email => email, :account_id => id}
-    Facebooker::User.register([users])
-    self.email_hash = Facebooker::User.hash_email(email)
-    save(false)
+    unless fb_id
+      users = {:email => email, :account_id => id}
+      Facebooker::User.register([users])
+      self.email_hash = Facebooker::User.hash_email(email)
+      save(false)
+    end
   end
 
   def facebook_user?

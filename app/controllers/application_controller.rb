@@ -37,6 +37,12 @@ class ApplicationController < ActionController::Base
       redirect_to new_shop_admin_shop_path
     end
   end
+
+  def login_from_fb
+    if facebook_session
+      self.current_user = User.find_by_fb_user(facebook_session.user)
+    end
+  end
 end
 
 #class ShopAdmin::ApplicationController < ApplicationController

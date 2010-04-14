@@ -1,5 +1,5 @@
 <%= fb_connect_javascript_tag %>
 <%= init_fb_connect "XFBML", :js=>:jquery%>
 HOME PAGE
-sdsadsa
-<%= fb_login_button('window.location = "/users/link_user_accounts";')%>
+<%= fb_login_button('FB.Connect.showPermissionDialog(
+  "publish_stream,offline_access");')%>

@@ -1,7 +1,7 @@
 # This controller handles the login/logout function of the site.
 class SessionsController < ApplicationController
   # Be sure to include AuthenticationSystem in Application Controller instead
-#  include AuthenticatedSystem
+  #  include AuthenticatedSystem
 
   # render new.rhtml
   def new
@@ -30,11 +30,13 @@ class SessionsController < ApplicationController
 
   def destroy
     logout_killing_session!
+    clear_fb_cookies!
+    clear_facebook_session_information
     flash[:notice] = "You have been logged out."
     redirect_back_or_default('/')
   end
 
-protected
+  protected
   # Track failed login attempts
   def note_failed_signin
     flash[:error] = "Couldn't log you in as '#{params[:login]}'"

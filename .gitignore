@@ -16,3 +16,4 @@ db/*.sqlite*
 public/assets/*
 themes/development/*
 tmp/**/*
+doc/**/*~

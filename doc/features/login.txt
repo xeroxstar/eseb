@@ -1,0 +1,11 @@
++ User register new account,
+   - register email hash with facebook
++ User connect with facebook
+   - If that fb_id already has in system, system auto log in and:
+	= Active that account if that account is pending
+	= re_link to facebook
+	= redirect back or to my account path
+   - If that user is not already has in system
+	= Redirect to create new account
+	= No need to activate that account
+	= reidrect to my account

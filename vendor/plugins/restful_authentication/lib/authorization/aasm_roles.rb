@@ -21,6 +21,10 @@ module Authorization
           transitions :from => :passive, :to => :pending, :guard => Proc.new {|u| !(u.crypted_password.blank? && u.password.blank?) }
         end
 
+        aasm_event :connect_fb do
+          transitions :from => :passive, :to => :active, :guard => Proc.new {|u| !(u.fb_id.blank?) }
+        end
+
         aasm_event :activate do
           transitions :from => :pending, :to => :active
         end
