@@ -8,6 +8,7 @@ class Product < ActiveRecord::Base
   strip_attributes!
   after_save :add_images
   before_create :shop_user_syn
+#  after_create :published_to_facebook
   # Asscociations
   belongs_to :subcategory, :foreign_key => 'category_id', :class_name=>'Category'
   belongs_to :shop_category
@@ -48,6 +49,24 @@ class Product < ActiveRecord::Base
     ProductDrop.new self, options
   end
 
+  def to_fb_attachment
+    attachment = {:caption=>"{*actor*} posted from weeshop",
+                  :description=>"#{description}",
+                  :name=>name,
+                  :href=>"http://robdoan.homedns.org:3000/products/#{id}"}
+    medias = []
+    for image in images do
+      medias << {:type=>'image',
+        :src=>"http://robdoan.homedns.org:3000#{image.attachment.url(:mini)}",
+        :href=>"http://robdoan.homedns.org:3000#{image.attachment.url(:product)}" }
+    end
+    if !medias.blank?
+      attachment = attachment.merge(:media=>medias)
+    end
+    attachment
+  end
+
+
   protected
   # Set shop depent on user
   def shop_user_syn
@@ -63,5 +82,10 @@ class Product < ActiveRecord::Base
         image.update_attribute(:viewable, self)
       end
     end
+  end
+
+  def published_to_facebook
+    img_ids = (@image_ids||'').split(',')
+    user.publish_product(self,img_ids)
   end
 end

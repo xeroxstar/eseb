@@ -13,8 +13,11 @@ class ShopAdmin::ProductsController < ShopAdmin::ApplicationController
 
   def create
     @product = current_user.products.new(params[:product])
-    @product.add_to_shop=1
+    @product.add_to_shop=1 # Add this product to shop
     if @product.save
+      if facebook_session.user && facebook_session.user.has_permission?('publish_stream')
+        ProductPublisher.deliver_publish_create_product(facebook_session.user,@product)
+      end
       redirect_to '/myshop'
     else
       render :new

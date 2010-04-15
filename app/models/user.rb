@@ -166,6 +166,32 @@ class User < ActiveRecord::Base
     return !fb_id.nil? && fb_id > 0
   end
 
+  def fb_user
+    return :false if fb_id.nil?
+    Facebooker::User.new(fb_id)
+  end
+
+  def publish_product(product,images_ids=[])
+    if fb_user && fb_user.has_permission?('publish_stream')
+      attachment = {:caption=>"{*actor*} posted from weeshop",
+        :description=>"#{product.description}"}
+      medias = []
+      for image in Image.with_ids(images_ids) do
+        medias << {:type=>'image',
+          :src=>"http://robdoan.homedns.org:3000#{image.attachment.url(:mini)}",
+          :href=>"http://robdoan.homedns.org:3000#{image.attachment.url(:product)}" }
+      end
+      if !medias.blank?
+        attachment = attachment.merge(:media=>medias)
+      end
+      if shop
+        attachment =attachment.merge({:name=>"#{shop.name} shop", :href=>"http://robdoan.homedns.org:3000/#{shop.shortname}"})
+      end
+      fb_user.publish_to(fb_user,:message=>"created  new #{product.name}",
+        :attachment=>attachment)
+    end
+  end
+
   protected
 
   # does user have a shop?
