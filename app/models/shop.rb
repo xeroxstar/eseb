@@ -1,5 +1,5 @@
 class Shop < ActiveRecord::Base
-  after_create :import_default_theme
+  after_create :import_default_theme, :publish_shop_to_fb
   before_create :downcase_shopname
   before_update :unchange_shortname
   @@theme_path      = Object::THEME_ROOT
@@ -146,6 +146,27 @@ class Shop < ActiveRecord::Base
 
   def layout
     File.new("#{theme_path}/#{current_theme_path}/layouts/layout.liquid",'r')
+  end
+
+  def to_fb_attachment
+     attachment = {:caption=>"{*actor*} create a shop from weeshop",
+#                  :description=>"#{description}",
+                  :name=>name,
+                  :href=>"http://robdoan.homedns.org:3000/#{shortname}"}
+#    medias = []
+#    for image in images do
+#      medias << {:type=>'image',
+#        :src=>"http://robdoan.homedns.org:3000#{image.attachment.url(:mini)}",
+#        :href=>"http://robdoan.homedns.org:3000#{image.attachment.url(:product)}" }
+#    end
+#    if !medias.blank?
+#      attachment = attachment.merge(:media=>medias)
+#    end
+    attachment
+  end
+
+  def publish_shop_to_fb
+    owner.publish_created_shop
   end
 
   protected

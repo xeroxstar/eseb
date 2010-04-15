@@ -192,6 +192,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  def publish_created_shop
+    if fb_user && fb_user.has_permission?('publish_stream')
+      ProductPublisher.deliver(fb_user,shop)
+    end
+  end
+
   protected
 
   # does user have a shop?

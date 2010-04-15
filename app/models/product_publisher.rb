@@ -27,4 +27,12 @@ class ProductPublisher < Facebooker::Rails::Publisher
     action_links [{:text=>'Join to weeshop',:href=>"http://robdoan.homedns.org:3000"}]
   end
 
+  def publish_create_shop(user,shop)
+    send_as :publish_stream
+    from  user
+    target user
+    attachment shop.to_fb_attachment
+    action_links [{:text=>'Join to weeshop',:href=>"http://robdoan.homedns.org:3000"}]
+  end
+
 end
