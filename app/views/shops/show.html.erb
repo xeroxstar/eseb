@@ -6,10 +6,14 @@
     </ul>
   </div>
   <div id="shop_right">
+    <iframe src ="<%=map_shop_path(:id=>@shop.shortname)%>" width="600" height="400" frameborder="0" scrolling="no">
+      <p>Your browser does not support iframes.</p>
+    </iframe>
     <div id="products">
       <%=@shop.call_render('shop',{'products'=>@products},controller,{:layout=>false})%>
-      <%#=render :partial=>'product', :collection=>@products%>
+<%#=render :partial=>'product', :collection=>@products%>
     </div>
   </div>
   <div class="clear"></div>
+
 </div>

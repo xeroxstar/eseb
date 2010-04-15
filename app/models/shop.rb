@@ -94,6 +94,17 @@ class Shop < ActiveRecord::Base
     update_attribute(:status,DEACTIVE)
   end
 
+  def main_branch_address
+    addresses.first
+  end
+  def lat
+    main_branch_address.lat
+  end
+  
+  def lng
+    main_branch_address.lng
+  end
+
   def to_liquid(options={})
     ShopDrop.new self, options
   end

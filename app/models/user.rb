@@ -40,16 +40,17 @@ class User < ActiveRecord::Base
   has_one :address, :as=>:addressable
   has_one :shop, :foreign_key => 'user_id'
   #  accepts_nested_attributes_for :address
-  class << self
-    # This method is worked with the single-table inheritance model.
-    # Create ShopOwner object when user record have enough infomation
-    #    def instantiate(record)
-    #      if Shop.exists?(:user_id=>record['id'])
-    #        record[inheritance_column] = 'ShopOwner'
-    #      end
-    #      super(record)
-    #    end
-  end
+
+  #  class << self
+  #    # This method is worked with the single-table inheritance model.
+  #    # Create ShopOwner object when user record have enough infomation
+  #    #    def instantiate(record)
+  #    #      if Shop.exists?(:user_id=>record['id'])
+  #    #        record[inheritance_column] = 'ShopOwner'
+  #    #      end
+  #    #      super(record)
+  #    #    end
+  #  end
 
   # Authenticates a user by their login name and unencrypted password.  Returns the user or nil.
   #
@@ -91,6 +92,20 @@ class User < ActiveRecord::Base
       raise ArgumentError, "The value must be a Hash"
     end
   end
+
+  def lat
+    address.lat
+  end
+
+  def lng
+    address.lng
+  end
+
+  def shops_near_me(distances)
+    shop_addresses = Address.find(:all,:within=>distances,:conditions=>["addressable_type= ?",'Shop'],:origin=>[self.lat,self.lng])
+    Shop.all(:conditions=>{:id=>shop_addresses.map(&:addressable_id)})
+  end
+
   def update_attributes(attributes)
     addr = attributes.delete(:address)
     if addr

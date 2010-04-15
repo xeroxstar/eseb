@@ -30,6 +30,7 @@ class ApplicationController < ActionController::Base
     end
   end
   protected
+
   def owner_of_shop
     @shop = current_user.shop
     unless @shop

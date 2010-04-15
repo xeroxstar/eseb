@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>Test</title>
+    <%= GMap.header %>
+    <script type="text/javascript">
+      var cafeIcon = new GIcon();
+      cafeIcon.image = "http://www.softlist.net/images/icons/large_home_icons_desktop_icons-129382.gif";
+      cafeIcon.shadow = "http://chart.apis.google.com/chart?chst=d_map_pin_shadow";
+      cafeIcon.iconSize = new GSize(12, 20);
+      cafeIcon.shadowSize = new GSize(22, 20);
+      cafeIcon.iconAnchor = new GPoint(6, 20);
+      cafeIcon.infoWindowAnchor = new GPoint(5, 1);
+      // Set up our GMarkerOptions object literal
+    </script>
+    <%= @map.to_html %>
+  </head>
+  <body>
+    <%= @map.div(:width => 600, :height => 400) %>
+  </body>
+</html>
