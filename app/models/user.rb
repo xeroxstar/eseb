@@ -209,7 +209,7 @@ class User < ActiveRecord::Base
 
   def publish_created_shop
     if fb_user && fb_user.has_permission?('publish_stream')
-      ProductPublisher.deliver(fb_user,shop)
+      ProductPublisher.deliver_publish_create_shop(fb_user,shop)
     end
   end
 

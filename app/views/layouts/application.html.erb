@@ -7,6 +7,11 @@
   <%=stylesheet_link_tag 'skin/default' %>
   <%=use_fancybox%>
   <%= fb_connect_javascript_tag %>
+  <script type="text/javascript">
+    function redirect_to_link_user(){
+      window.location.href = '/users/link_user_accounts'
+    }
+  </script>
   <%=yield :head%>
   <%init_fb_connect "XFBML", :js=>:jquery do%>
     <%=yield :onload_js%>
